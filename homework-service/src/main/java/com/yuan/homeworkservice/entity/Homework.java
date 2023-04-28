@@ -1,9 +1,13 @@
 package com.yuan.homeworkservice.entity;
 
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * (Homework)表实体类
@@ -13,15 +17,23 @@ import java.io.Serializable;
  */
 @SuppressWarnings("serial")
 public class Homework extends Model<Homework> {
-
+    @TableId
     private Integer homId;
 
     private Integer couId;
 
     private String homName;
 
+    //出参的格式化
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    //入参的格式化
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date homStart;
 
+    //出参的格式化
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    //入参的格式化
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date homEnd;
 
     private String homDes;

@@ -12,6 +12,7 @@
     <module>homework-service</module>
     <module>review-service</module>
     <module>user-service</module>
+    <module>gateway</module>
   </modules>
 
   <name>backStageManagement</name>

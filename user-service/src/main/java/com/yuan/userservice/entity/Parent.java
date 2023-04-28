@@ -1,6 +1,7 @@
 package com.yuan.userservice.entity;
 
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 
 import java.io.Serializable;
@@ -13,7 +14,7 @@ import java.io.Serializable;
  */
 @SuppressWarnings("serial")
 public class Parent extends Model<Parent> {
-
+    @TableId
     private Integer parId;
 
     private String parName;

@@ -1,6 +1,7 @@
 package com.yuan.homeworkservice.entity;
 
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 
 import java.io.Serializable;
@@ -13,7 +14,7 @@ import java.io.Serializable;
  */
 @SuppressWarnings("serial")
 public class StuHomework extends Model<StuHomework> {
-
+    @TableId
     private Integer stuHomId;
 
     private Integer homId;

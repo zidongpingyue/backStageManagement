@@ -10,7 +10,7 @@ import com.yuan.userservice.entity.Teacher;
  * (Teacher)表数据库访问层
  *
  * @author makejava
- * @since 2023-04-28 19:41:08
+ * @since 2023-04-28 19:10:45
  */
 public interface TeacherDao extends BaseMapper<Teacher> {
 

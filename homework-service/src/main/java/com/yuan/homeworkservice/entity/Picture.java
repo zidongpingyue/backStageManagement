@@ -1,9 +1,13 @@
 package com.yuan.homeworkservice.entity;
 
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * (Picture)表实体类
@@ -13,11 +17,14 @@ import java.io.Serializable;
  */
 @SuppressWarnings("serial")
 public class Picture extends Model<Picture> {
-
+    @TableId
     private Integer picId;
 
     private Integer stuHomId;
-
+    //出参的格式化
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    //入参的格式化
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date picTime;
 
     private String picUrl;

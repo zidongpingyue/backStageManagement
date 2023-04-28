@@ -1,6 +1,7 @@
 package com.yuan.userservice.entity;
 
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 
 import java.io.Serializable;
@@ -9,11 +10,11 @@ import java.io.Serializable;
  * (Teacher)表实体类
  *
  * @author makejava
- * @since 2023-04-28 19:41:08
+ * @since 2023-04-28 19:10:45
  */
 @SuppressWarnings("serial")
 public class Teacher extends Model<Teacher> {
-
+    @TableId
     private Integer teaId;
 
     private String teaName;

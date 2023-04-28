@@ -32,12 +32,11 @@ public class ClassController extends ApiController {
      * 分页查询所有数据
      *
      * @param page  分页对象
-     * @param class 查询实体
      * @return 所有数据
      */
     @GetMapping
-    public R selectAll(Page<Class> page, Class class) {
-        return success(this.classService.page(page, new QueryWrapper<>( class)))
+    public R selectAll(Page<Class> page, Class myclass) {
+        return success(this.classService.page(page, new QueryWrapper<>(myclass)));
     }
 
     /**
@@ -54,23 +53,21 @@ public class ClassController extends ApiController {
     /**
      * 新增数据
      *
-     * @param class 实体对象
      * @return 新增结果
      */
     @PostMapping
-    public R insert(@RequestBody Class class) {
-        return success(this.classService.save( class))
+    public R insert(@RequestBody Class myclass) {
+        return success(this.classService.save(myclass));
     }
 
     /**
      * 修改数据
      *
-     * @param class 实体对象
      * @return 修改结果
      */
     @PutMapping
-    public R update(@RequestBody Class class) {
-        return success(this.classService.updateById( class))
+    public R update(@RequestBody Class myclass) {
+        return success(this.classService.updateById(myclass));
     }
 
     /**

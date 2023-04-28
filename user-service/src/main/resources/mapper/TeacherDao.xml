@@ -15,7 +15,7 @@
 
     <!-- 批量插入 -->
     <insert id="insertBatch" keyProperty="teaId" useGeneratedKeys="true">
-        insert into bishe.teacher(tea_name, tea_sex, tea_age, tea_education, tea_phone, tea_token, tea_avatar)
+        insert into bishe2.teacher(tea_name, tea_sex, tea_age, tea_education, tea_phone, tea_token, tea_avatar)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.teaName}, #{entity.teaSex}, #{entity.teaAge}, #{entity.teaEducation}, #{entity.teaPhone},
@@ -24,7 +24,7 @@
     </insert>
     <!-- 批量插入或按主键更新 -->
     <insert id="insertOrUpdateBatch" keyProperty="teaId" useGeneratedKeys="true">
-        insert into bishe.teacher(tea_name, tea_sex, tea_age, tea_education, tea_phone, tea_token, tea_avatar)
+        insert into bishe2.teacher(tea_name, tea_sex, tea_age, tea_education, tea_phone, tea_token, tea_avatar)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.teaName}, #{entity.teaSex}, #{entity.teaAge}, #{entity.teaEducation}, #{entity.teaPhone},

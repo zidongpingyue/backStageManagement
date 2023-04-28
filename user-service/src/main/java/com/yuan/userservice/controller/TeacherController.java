@@ -17,7 +17,7 @@ import java.util.List;
  * (Teacher)表控制层
  *
  * @author makejava
- * @since 2023-04-28 19:41:07
+ * @since 2023-04-28 19:10:44
  */
 @RestController
 @RequestMapping("teacher")

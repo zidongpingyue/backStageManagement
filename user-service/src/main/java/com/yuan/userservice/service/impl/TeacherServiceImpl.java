@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
  * (Teacher)表服务实现类
  *
  * @author makejava
- * @since 2023-04-28 19:41:09
+ * @since 2023-04-28 19:45:55
  */
 @Service("teacherService")
 public class TeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher> implements TeacherService {

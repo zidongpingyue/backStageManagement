@@ -1,9 +1,13 @@
 package com.yuan.courseservice.entity;
 
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * (Message)表实体类
@@ -13,11 +17,15 @@ import java.io.Serializable;
  */
 @SuppressWarnings("serial")
 public class Message extends Model<Message> {
-
+    @TableId
     private Integer mesId;
 
     private Integer couId;
 
+    //出参的格式化
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    //入参的格式化
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date mesTime;
 
     private String mesContent;
