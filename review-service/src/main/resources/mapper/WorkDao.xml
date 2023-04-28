@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuan.reviewservice.dao.WorkDao">
+
+    <resultMap type="com.yuan.reviewservice.entity.Work" id="WorkMap">
+        <result property="worId" column="wor_id" jdbcType="INTEGER"/>
+        <result property="proId" column="pro_id" jdbcType="INTEGER"/>
+        <result property="ansId" column="ans_id" jdbcType="INTEGER"/>
+        <result property="worScore" column="wor_score" jdbcType="VARCHAR"/>
+        <result property="worComment" column="wor_comment" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="worId" useGeneratedKeys="true">
+        insert into bishe.work(pro_id, ans_id, wor_score, wor_comment)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.proId}, #{entity.ansId}, #{entity.worScore}, #{entity.worComment})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="worId" useGeneratedKeys="true">
+        insert into bishe.work(pro_id, ans_id, wor_score, wor_comment)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.proId}, #{entity.ansId}, #{entity.worScore}, #{entity.worComment})
+        </foreach>
+        on duplicate key update
+        pro_id = values(pro_id) , ans_id = values(ans_id) , wor_score = values(wor_score) , wor_comment =
+        values(wor_comment)
+    </insert>
+
+</mapper>
+

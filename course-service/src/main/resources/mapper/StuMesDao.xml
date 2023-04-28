@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuan.courseservice.dao.StuMesDao">
+
+    <resultMap type="com.yuan.courseservice.entity.StuMes" id="StuMesMap">
+        <result property="stuMesId" column="stu_mes_id" jdbcType="INTEGER"/>
+        <result property="stuId" column="stu_id" jdbcType="INTEGER"/>
+        <result property="mesId" column="mes_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="stuMesId" useGeneratedKeys="true">
+        insert into bishe.stu_mes(stu_id, mes_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.stuId}, #{entity.mesId})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="stuMesId" useGeneratedKeys="true">
+        insert into bishe.stu_mes(stu_id, mes_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.stuId}, #{entity.mesId})
+        </foreach>
+        on duplicate key update
+        stu_id = values(stu_id) , mes_id = values(mes_id)
+    </insert>
+
+</mapper>
+

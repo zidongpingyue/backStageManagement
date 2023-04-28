@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuan.reviewservice.dao.ProblemDao">
+
+    <resultMap type="com.yuan.reviewservice.entity.Problem" id="ProblemMap">
+        <result property="proId" column="pro_id" jdbcType="INTEGER"/>
+        <result property="homId" column="hom_id" jdbcType="INTEGER"/>
+        <result property="proNum" column="pro_num" jdbcType="INTEGER"/>
+        <result property="proTxt" column="pro_txt" jdbcType="VARCHAR"/>
+        <result property="proAns" column="pro_ans" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="proId" useGeneratedKeys="true">
+        insert into bishe.problem(hom_id, pro_num, pro_txt, pro_ans)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.homId}, #{entity.proNum}, #{entity.proTxt}, #{entity.proAns})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="proId" useGeneratedKeys="true">
+        insert into bishe.problem(hom_id, pro_num, pro_txt, pro_ans)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.homId}, #{entity.proNum}, #{entity.proTxt}, #{entity.proAns})
+        </foreach>
+        on duplicate key update
+        hom_id = values(hom_id) , pro_num = values(pro_num) , pro_txt = values(pro_txt) , pro_ans = values(pro_ans)
+    </insert>
+
+</mapper>
+

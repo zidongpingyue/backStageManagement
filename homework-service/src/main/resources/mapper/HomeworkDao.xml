@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuan.homeworkservice.dao.HomeworkDao">
+
+    <resultMap type="com.yuan.homeworkservice.entity.Homework" id="HomeworkMap">
+        <result property="homId" column="hom_id" jdbcType="INTEGER"/>
+        <result property="couId" column="cou_id" jdbcType="INTEGER"/>
+        <result property="homName" column="hom_name" jdbcType="VARCHAR"/>
+        <result property="homStart" column="hom_start" jdbcType="TIMESTAMP"/>
+        <result property="homEnd" column="hom_end" jdbcType="TIMESTAMP"/>
+        <result property="homDes" column="hom_des" jdbcType="VARCHAR"/>
+        <result property="homCommit" column="hom_commit" jdbcType="INTEGER"/>
+        <result property="homSave" column="hom_save" jdbcType="INTEGER"/>
+        <result property="homTotal" column="hom_total" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="homId" useGeneratedKeys="true">
+        insert into bishe.homework(cou_id, hom_name, hom_start, hom_end, hom_des, hom_commit, hom_save, hom_total)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.couId}, #{entity.homName}, #{entity.homStart}, #{entity.homEnd}, #{entity.homDes},
+            #{entity.homCommit}, #{entity.homSave}, #{entity.homTotal})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="homId" useGeneratedKeys="true">
+        insert into bishe.homework(cou_id, hom_name, hom_start, hom_end, hom_des, hom_commit, hom_save, hom_total)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.couId}, #{entity.homName}, #{entity.homStart}, #{entity.homEnd}, #{entity.homDes},
+            #{entity.homCommit}, #{entity.homSave}, #{entity.homTotal})
+        </foreach>
+        on duplicate key update
+        cou_id = values(cou_id) , hom_name = values(hom_name) , hom_start = values(hom_start) , hom_end =
+        values(hom_end) , hom_des = values(hom_des) , hom_commit = values(hom_commit) , hom_save = values(hom_save) ,
+        hom_total = values(hom_total)
+    </insert>
+
+</mapper>
+

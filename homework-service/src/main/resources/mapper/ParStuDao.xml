@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuan.userservice.dao.ParStuDao">
+
+    <resultMap type="com.yuan.userservice.entity.ParStu" id="ParStuMap">
+        <result property="parStuId" column="par_stu_id" jdbcType="INTEGER"/>
+        <result property="stuId" column="stu_id" jdbcType="INTEGER"/>
+        <result property="parId" column="par_id" jdbcType="INTEGER"/>
+        <result property="parStuName" column="par_stu_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="parStuId" useGeneratedKeys="true">
+        insert into bishe.par_stu(stu_id, par_id, par_stu_name)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.stuId}, #{entity.parId}, #{entity.parStuName})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="parStuId" useGeneratedKeys="true">
+        insert into bishe.par_stu(stu_id, par_id, par_stu_name)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.stuId}, #{entity.parId}, #{entity.parStuName})
+        </foreach>
+        on duplicate key update
+        stu_id = values(stu_id) , par_id = values(par_id) , par_stu_name = values(par_stu_name)
+    </insert>
+
+</mapper>
+
