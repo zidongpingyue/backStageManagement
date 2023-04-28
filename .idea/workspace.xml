@@ -4,52 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1f3e7d5e-33cd-4436-bd07-87ad84a16360" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/course-service/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/course-service/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/course-service/src/main/java/com/yuan/courseservice/CourseServiceApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/course-service/src/test/java/com/yuan/courseservice/CourseServiceApplicationTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework-service/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework-service/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/homeworkservice/HomeworkServiceApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/controller/ParStuController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/controller/ParentController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/controller/StudentController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/controller/TeacherController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/dao/ParStuDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/dao/ParentDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/dao/StudentDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/dao/TeacherDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/entity/ParStu.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/entity/Parent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/entity/Student.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/entity/Teacher.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/service/ParStuService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/service/ParentService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/service/StudentService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/service/TeacherService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/service/impl/ParStuServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/service/impl/ParentServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/service/impl/StudentServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/service/impl/TeacherServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework-service/src/main/resources/mapper/ParStuDao.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework-service/src/main/resources/mapper/ParentDao.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework-service/src/main/resources/mapper/StudentDao.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework-service/src/main/resources/mapper/TeacherDao.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework-service/src/test/java/com/yuan/homeworkservice/HomeworkServiceApplicationTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/review-service/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/review-service/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/review-service/src/main/java/com/yuan/reviewservice/ReviewServiceApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/review-service/src/test/java/com/yuan/reviewservice/ReviewServiceApplicationTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/yuan/userservice/UserServiceApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/src/test/java/com/yuan/userservice/UserServiceApplicationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="1f3e7d5e-33cd-4436-bd07-87ad84a16360" name="Changes" comment="first">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,12 +42,13 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "jdk.selected.JAVA_MODULE": "1.8",
+    "last_opened_file_path": "D:/code/javaProject/毕业设计/zidongpingyue/spring-cloud-bishe",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.importing",
-    "spring.configuration.checksum": "25b8e6d6beff6aebec1c4bdc45812f44",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
+    "spring.configuration.checksum": "d709402f56bec3b7c4d4e9208fcf49cf",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -108,8 +66,17 @@
       <option name="presentableId" value="Default" />
       <updated>1682674242281</updated>
       <workItem from="1682674243470" duration="1611000" />
-      <workItem from="1682676399675" duration="306000" />
+      <workItem from="1682676399675" duration="1154000" />
+      <workItem from="1682677623110" duration="13000" />
     </task>
+    <task id="LOCAL-00001" summary="first">
+      <created>1682676810920</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1682676810920</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -117,5 +84,13 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/course-service" />
+      <path value="$PROJECT_DIR$/homework-service" />
+      <path value="$PROJECT_DIR$/review-service" />
+      <path value="$PROJECT_DIR$/user-service" />
+    </ignored-roots>
+    <MESSAGE value="first" />
+    <option name="LAST_COMMIT_MESSAGE" value="first" />
   </component>
 </project>
