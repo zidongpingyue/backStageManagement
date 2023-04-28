@@ -1,0 +1,2078 @@
+Index: homework-service/src/main/java/com/yuan/userservice/service/impl/ParStuServiceImpl.java
+===================================================================
+diff --git a/homework-service/src/main/java/com/yuan/userservice/service/impl/ParStuServiceImpl.java b/homework-service/src/main/java/com/yuan/userservice/service/impl/ParStuServiceImpl.java
+deleted file mode 100644
+--- a/homework-service/src/main/java/com/yuan/userservice/service/impl/ParStuServiceImpl.java	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
++++ /dev/null	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
+@@ -1,19 +0,0 @@
+-package com.yuan.userservice.service.impl;
+-
+-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+-import com.yuan.userservice.dao.ParStuDao;
+-import com.yuan.userservice.entity.ParStu;
+-import com.yuan.userservice.service.ParStuService;
+-import org.springframework.stereotype.Service;
+-
+-/**
+- * (ParStu)表服务实现类
+- *
+- * @author makejava
+- * @since 2023-04-28 18:05:44
+- */
+-@Service("parStuService")
+-public class ParStuServiceImpl extends ServiceImpl<ParStuDao, ParStu> implements ParStuService {
+-
+-}
+-
+Index: homework-service/src/main/java/com/yuan/userservice/controller/ParStuController.java
+===================================================================
+diff --git a/homework-service/src/main/java/com/yuan/userservice/controller/ParStuController.java b/homework-service/src/main/java/com/yuan/userservice/controller/ParStuController.java
+deleted file mode 100644
+--- a/homework-service/src/main/java/com/yuan/userservice/controller/ParStuController.java	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
++++ /dev/null	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
+@@ -1,87 +0,0 @@
+-package com.yuan.userservice.controller;
+-
+-
+-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+-import com.baomidou.mybatisplus.extension.api.ApiController;
+-import com.baomidou.mybatisplus.extension.api.R;
+-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+-import com.yuan.userservice.entity.ParStu;
+-import com.yuan.userservice.service.ParStuService;
+-import org.springframework.web.bind.annotation.*;
+-
+-import javax.annotation.Resource;
+-import java.io.Serializable;
+-import java.util.List;
+-
+-/**
+- * (ParStu)表控制层
+- *
+- * @author makejava
+- * @since 2023-04-28 18:05:31
+- */
+-@RestController
+-@RequestMapping("parStu")
+-public class ParStuController extends ApiController {
+-    /**
+-     * 服务对象
+-     */
+-    @Resource
+-    private ParStuService parStuService;
+-
+-    /**
+-     * 分页查询所有数据
+-     *
+-     * @param page   分页对象
+-     * @param parStu 查询实体
+-     * @return 所有数据
+-     */
+-    @GetMapping
+-    public R selectAll(Page<ParStu> page, ParStu parStu) {
+-        return success(this.parStuService.page(page, new QueryWrapper<>(parStu)));
+-    }
+-
+-    /**
+-     * 通过主键查询单条数据
+-     *
+-     * @param id 主键
+-     * @return 单条数据
+-     */
+-    @GetMapping("{id}")
+-    public R selectOne(@PathVariable Serializable id) {
+-        return success(this.parStuService.getById(id));
+-    }
+-
+-    /**
+-     * 新增数据
+-     *
+-     * @param parStu 实体对象
+-     * @return 新增结果
+-     */
+-    @PostMapping
+-    public R insert(@RequestBody ParStu parStu) {
+-        return success(this.parStuService.save(parStu));
+-    }
+-
+-    /**
+-     * 修改数据
+-     *
+-     * @param parStu 实体对象
+-     * @return 修改结果
+-     */
+-    @PutMapping
+-    public R update(@RequestBody ParStu parStu) {
+-        return success(this.parStuService.updateById(parStu));
+-    }
+-
+-    /**
+-     * 删除数据
+-     *
+-     * @param idList 主键结合
+-     * @return 删除结果
+-     */
+-    @DeleteMapping
+-    public R delete(@RequestParam("idList") List<Long> idList) {
+-        return success(this.parStuService.removeByIds(idList));
+-    }
+-}
+-
+Index: homework-service/src/main/java/com/yuan/userservice/dao/ParStuDao.java
+===================================================================
+diff --git a/homework-service/src/main/java/com/yuan/userservice/dao/ParStuDao.java b/homework-service/src/main/java/com/yuan/userservice/dao/ParStuDao.java
+deleted file mode 100644
+--- a/homework-service/src/main/java/com/yuan/userservice/dao/ParStuDao.java	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
++++ /dev/null	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
+@@ -1,35 +0,0 @@
+-package com.yuan.userservice.dao;
+-
+-import java.util.List;
+-
+-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+-import org.apache.ibatis.annotations.Param;
+-import com.yuan.userservice.entity.ParStu;
+-
+-/**
+- * (ParStu)表数据库访问层
+- *
+- * @author makejava
+- * @since 2023-04-28 18:05:32
+- */
+-public interface ParStuDao extends BaseMapper<ParStu> {
+-
+-    /**
+-     * 批量新增数据（MyBatis原生foreach方法）
+-     *
+-     * @param entities List<ParStu> 实例对象列表
+-     * @return 影响行数
+-     */
+-    int insertBatch(@Param("entities") List<ParStu> entities);
+-
+-    /**
+-     * 批量新增或按主键更新数据（MyBatis原生foreach方法）
+-     *
+-     * @param entities List<ParStu> 实例对象列表
+-     * @return 影响行数
+-     * @throws org.springframework.jdbc.BadSqlGrammarException 入参是空List的时候会抛SQL语句错误的异常，请自行校验入参
+-     */
+-    int insertOrUpdateBatch(@Param("entities") List<ParStu> entities);
+-
+-}
+-
+Index: homework-service/src/main/java/com/yuan/userservice/service/impl/StudentServiceImpl.java
+===================================================================
+diff --git a/homework-service/src/main/java/com/yuan/userservice/service/impl/StudentServiceImpl.java b/homework-service/src/main/java/com/yuan/userservice/service/impl/StudentServiceImpl.java
+deleted file mode 100644
+--- a/homework-service/src/main/java/com/yuan/userservice/service/impl/StudentServiceImpl.java	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
++++ /dev/null	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
+@@ -1,19 +0,0 @@
+-package com.yuan.userservice.service.impl;
+-
+-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+-import com.yuan.userservice.dao.StudentDao;
+-import com.yuan.userservice.entity.Student;
+-import com.yuan.userservice.service.StudentService;
+-import org.springframework.stereotype.Service;
+-
+-/**
+- * (Student)表服务实现类
+- *
+- * @author makejava
+- * @since 2023-04-28 18:04:39
+- */
+-@Service("studentService")
+-public class StudentServiceImpl extends ServiceImpl<StudentDao, Student> implements StudentService {
+-
+-}
+-
+Index: homework-service/src/main/java/com/yuan/userservice/service/ParStuService.java
+===================================================================
+diff --git a/homework-service/src/main/java/com/yuan/userservice/service/ParStuService.java b/homework-service/src/main/java/com/yuan/userservice/service/ParStuService.java
+deleted file mode 100644
+--- a/homework-service/src/main/java/com/yuan/userservice/service/ParStuService.java	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
++++ /dev/null	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
+@@ -1,15 +0,0 @@
+-package com.yuan.userservice.service;
+-
+-import com.baomidou.mybatisplus.extension.service.IService;
+-import com.yuan.userservice.entity.ParStu;
+-
+-/**
+- * (ParStu)表服务接口
+- *
+- * @author makejava
+- * @since 2023-04-28 18:05:44
+- */
+-public interface ParStuService extends IService<ParStu> {
+-
+-}
+-
+Index: homework-service/src/main/java/com/yuan/userservice/entity/Student.java
+===================================================================
+diff --git a/homework-service/src/main/java/com/yuan/userservice/entity/Student.java b/homework-service/src/main/java/com/yuan/userservice/entity/Student.java
+deleted file mode 100644
+--- a/homework-service/src/main/java/com/yuan/userservice/entity/Student.java	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
++++ /dev/null	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
+@@ -1,108 +0,0 @@
+-package com.yuan.userservice.entity;
+-
+-
+-import com.baomidou.mybatisplus.extension.activerecord.Model;
+-
+-import java.io.Serializable;
+-
+-/**
+- * (Student)表实体类
+- *
+- * @author makejava
+- * @since 2023-04-28 18:04:36
+- */
+-@SuppressWarnings("serial")
+-public class Student extends Model<Student> {
+-
+-    private Integer stuId;
+-
+-    private Integer claId;
+-
+-    private String stuName;
+-
+-    private String stuSex;
+-
+-    private Integer stuAge;
+-
+-    private String stuPhone;
+-
+-    private String stuToken;
+-
+-    private String stuAvatar;
+-
+-
+-    public Integer getStuId() {
+-        return stuId;
+-    }
+-
+-    public void setStuId(Integer stuId) {
+-        this.stuId = stuId;
+-    }
+-
+-    public Integer getClaId() {
+-        return claId;
+-    }
+-
+-    public void setClaId(Integer claId) {
+-        this.claId = claId;
+-    }
+-
+-    public String getStuName() {
+-        return stuName;
+-    }
+-
+-    public void setStuName(String stuName) {
+-        this.stuName = stuName;
+-    }
+-
+-    public String getStuSex() {
+-        return stuSex;
+-    }
+-
+-    public void setStuSex(String stuSex) {
+-        this.stuSex = stuSex;
+-    }
+-
+-    public Integer getStuAge() {
+-        return stuAge;
+-    }
+-
+-    public void setStuAge(Integer stuAge) {
+-        this.stuAge = stuAge;
+-    }
+-
+-    public String getStuPhone() {
+-        return stuPhone;
+-    }
+-
+-    public void setStuPhone(String stuPhone) {
+-        this.stuPhone = stuPhone;
+-    }
+-
+-    public String getStuToken() {
+-        return stuToken;
+-    }
+-
+-    public void setStuToken(String stuToken) {
+-        this.stuToken = stuToken;
+-    }
+-
+-    public String getStuAvatar() {
+-        return stuAvatar;
+-    }
+-
+-    public void setStuAvatar(String stuAvatar) {
+-        this.stuAvatar = stuAvatar;
+-    }
+-
+-    /**
+-     * 获取主键值
+-     *
+-     * @return 主键值
+-     */
+-    @Override
+-    protected Serializable pkVal() {
+-        return this.stuId;
+-    }
+-}
+-
+Index: homework-service/src/main/java/com/yuan/userservice/dao/StudentDao.java
+===================================================================
+diff --git a/homework-service/src/main/java/com/yuan/userservice/dao/StudentDao.java b/homework-service/src/main/java/com/yuan/userservice/dao/StudentDao.java
+deleted file mode 100644
+--- a/homework-service/src/main/java/com/yuan/userservice/dao/StudentDao.java	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
++++ /dev/null	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
+@@ -1,35 +0,0 @@
+-package com.yuan.userservice.dao;
+-
+-import java.util.List;
+-
+-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+-import org.apache.ibatis.annotations.Param;
+-import com.yuan.userservice.entity.Student;
+-
+-/**
+- * (Student)表数据库访问层
+- *
+- * @author makejava
+- * @since 2023-04-28 18:04:34
+- */
+-public interface StudentDao extends BaseMapper<Student> {
+-
+-    /**
+-     * 批量新增数据（MyBatis原生foreach方法）
+-     *
+-     * @param entities List<Student> 实例对象列表
+-     * @return 影响行数
+-     */
+-    int insertBatch(@Param("entities") List<Student> entities);
+-
+-    /**
+-     * 批量新增或按主键更新数据（MyBatis原生foreach方法）
+-     *
+-     * @param entities List<Student> 实例对象列表
+-     * @return 影响行数
+-     * @throws org.springframework.jdbc.BadSqlGrammarException 入参是空List的时候会抛SQL语句错误的异常，请自行校验入参
+-     */
+-    int insertOrUpdateBatch(@Param("entities") List<Student> entities);
+-
+-}
+-
+Index: homework-service/src/main/java/com/yuan/userservice/controller/StudentController.java
+===================================================================
+diff --git a/homework-service/src/main/java/com/yuan/userservice/controller/StudentController.java b/homework-service/src/main/java/com/yuan/userservice/controller/StudentController.java
+deleted file mode 100644
+--- a/homework-service/src/main/java/com/yuan/userservice/controller/StudentController.java	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
++++ /dev/null	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
+@@ -1,87 +0,0 @@
+-package com.yuan.userservice.controller;
+-
+-
+-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+-import com.baomidou.mybatisplus.extension.api.ApiController;
+-import com.baomidou.mybatisplus.extension.api.R;
+-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+-import com.yuan.userservice.entity.Student;
+-import com.yuan.userservice.service.StudentService;
+-import org.springframework.web.bind.annotation.*;
+-
+-import javax.annotation.Resource;
+-import java.io.Serializable;
+-import java.util.List;
+-
+-/**
+- * (Student)表控制层
+- *
+- * @author makejava
+- * @since 2023-04-28 18:04:33
+- */
+-@RestController
+-@RequestMapping("student")
+-public class StudentController extends ApiController {
+-    /**
+-     * 服务对象
+-     */
+-    @Resource
+-    private StudentService studentService;
+-
+-    /**
+-     * 分页查询所有数据
+-     *
+-     * @param page    分页对象
+-     * @param student 查询实体
+-     * @return 所有数据
+-     */
+-    @GetMapping
+-    public R selectAll(Page<Student> page, Student student) {
+-        return success(this.studentService.page(page, new QueryWrapper<>(student)));
+-    }
+-
+-    /**
+-     * 通过主键查询单条数据
+-     *
+-     * @param id 主键
+-     * @return 单条数据
+-     */
+-    @GetMapping("{id}")
+-    public R selectOne(@PathVariable Serializable id) {
+-        return success(this.studentService.getById(id));
+-    }
+-
+-    /**
+-     * 新增数据
+-     *
+-     * @param student 实体对象
+-     * @return 新增结果
+-     */
+-    @PostMapping
+-    public R insert(@RequestBody Student student) {
+-        return success(this.studentService.save(student));
+-    }
+-
+-    /**
+-     * 修改数据
+-     *
+-     * @param student 实体对象
+-     * @return 修改结果
+-     */
+-    @PutMapping
+-    public R update(@RequestBody Student student) {
+-        return success(this.studentService.updateById(student));
+-    }
+-
+-    /**
+-     * 删除数据
+-     *
+-     * @param idList 主键结合
+-     * @return 删除结果
+-     */
+-    @DeleteMapping
+-    public R delete(@RequestParam("idList") List<Long> idList) {
+-        return success(this.studentService.removeByIds(idList));
+-    }
+-}
+-
+Index: homework-service/src/main/java/com/yuan/userservice/dao/TeacherDao.java
+===================================================================
+diff --git a/homework-service/src/main/java/com/yuan/userservice/dao/TeacherDao.java b/homework-service/src/main/java/com/yuan/userservice/dao/TeacherDao.java
+deleted file mode 100644
+--- a/homework-service/src/main/java/com/yuan/userservice/dao/TeacherDao.java	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
++++ /dev/null	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
+@@ -1,35 +0,0 @@
+-package com.yuan.userservice.dao;
+-
+-import java.util.List;
+-
+-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+-import org.apache.ibatis.annotations.Param;
+-import com.yuan.userservice.entity.Teacher;
+-
+-/**
+- * (Teacher)表数据库访问层
+- *
+- * @author makejava
+- * @since 2023-04-28 18:02:35
+- */
+-public interface TeacherDao extends BaseMapper<Teacher> {
+-
+-    /**
+-     * 批量新增数据（MyBatis原生foreach方法）
+-     *
+-     * @param entities List<Teacher> 实例对象列表
+-     * @return 影响行数
+-     */
+-    int insertBatch(@Param("entities") List<Teacher> entities);
+-
+-    /**
+-     * 批量新增或按主键更新数据（MyBatis原生foreach方法）
+-     *
+-     * @param entities List<Teacher> 实例对象列表
+-     * @return 影响行数
+-     * @throws org.springframework.jdbc.BadSqlGrammarException 入参是空List的时候会抛SQL语句错误的异常，请自行校验入参
+-     */
+-    int insertOrUpdateBatch(@Param("entities") List<Teacher> entities);
+-
+-}
+-
+Index: homework-service/src/main/java/com/yuan/userservice/controller/TeacherController.java
+===================================================================
+diff --git a/homework-service/src/main/java/com/yuan/userservice/controller/TeacherController.java b/homework-service/src/main/java/com/yuan/userservice/controller/TeacherController.java
+deleted file mode 100644
+--- a/homework-service/src/main/java/com/yuan/userservice/controller/TeacherController.java	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
++++ /dev/null	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
+@@ -1,87 +0,0 @@
+-package com.yuan.userservice.controller;
+-
+-
+-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+-import com.baomidou.mybatisplus.extension.api.ApiController;
+-import com.baomidou.mybatisplus.extension.api.R;
+-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+-import com.yuan.userservice.entity.Teacher;
+-import com.yuan.userservice.service.TeacherService;
+-import org.springframework.web.bind.annotation.*;
+-
+-import javax.annotation.Resource;
+-import java.io.Serializable;
+-import java.util.List;
+-
+-/**
+- * (Teacher)表控制层
+- *
+- * @author makejava
+- * @since 2023-04-28 18:02:34
+- */
+-@RestController
+-@RequestMapping("teacher")
+-public class TeacherController extends ApiController {
+-    /**
+-     * 服务对象
+-     */
+-    @Resource
+-    private TeacherService teacherService;
+-
+-    /**
+-     * 分页查询所有数据
+-     *
+-     * @param page    分页对象
+-     * @param teacher 查询实体
+-     * @return 所有数据
+-     */
+-    @GetMapping
+-    public R selectAll(Page<Teacher> page, Teacher teacher) {
+-        return success(this.teacherService.page(page, new QueryWrapper<>(teacher)));
+-    }
+-
+-    /**
+-     * 通过主键查询单条数据
+-     *
+-     * @param id 主键
+-     * @return 单条数据
+-     */
+-    @GetMapping("{id}")
+-    public R selectOne(@PathVariable Serializable id) {
+-        return success(this.teacherService.getById(id));
+-    }
+-
+-    /**
+-     * 新增数据
+-     *
+-     * @param teacher 实体对象
+-     * @return 新增结果
+-     */
+-    @PostMapping
+-    public R insert(@RequestBody Teacher teacher) {
+-        return success(this.teacherService.save(teacher));
+-    }
+-
+-    /**
+-     * 修改数据
+-     *
+-     * @param teacher 实体对象
+-     * @return 修改结果
+-     */
+-    @PutMapping
+-    public R update(@RequestBody Teacher teacher) {
+-        return success(this.teacherService.updateById(teacher));
+-    }
+-
+-    /**
+-     * 删除数据
+-     *
+-     * @param idList 主键结合
+-     * @return 删除结果
+-     */
+-    @DeleteMapping
+-    public R delete(@RequestParam("idList") List<Long> idList) {
+-        return success(this.teacherService.removeByIds(idList));
+-    }
+-}
+-
+Index: homework-service/src/main/java/com/yuan/userservice/dao/ParentDao.java
+===================================================================
+diff --git a/homework-service/src/main/java/com/yuan/userservice/dao/ParentDao.java b/homework-service/src/main/java/com/yuan/userservice/dao/ParentDao.java
+deleted file mode 100644
+--- a/homework-service/src/main/java/com/yuan/userservice/dao/ParentDao.java	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
++++ /dev/null	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
+@@ -1,35 +0,0 @@
+-package com.yuan.userservice.dao;
+-
+-import java.util.List;
+-
+-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+-import org.apache.ibatis.annotations.Param;
+-import com.yuan.userservice.entity.Parent;
+-
+-/**
+- * (Parent)表数据库访问层
+- *
+- * @author makejava
+- * @since 2023-04-28 18:04:42
+- */
+-public interface ParentDao extends BaseMapper<Parent> {
+-
+-    /**
+-     * 批量新增数据（MyBatis原生foreach方法）
+-     *
+-     * @param entities List<Parent> 实例对象列表
+-     * @return 影响行数
+-     */
+-    int insertBatch(@Param("entities") List<Parent> entities);
+-
+-    /**
+-     * 批量新增或按主键更新数据（MyBatis原生foreach方法）
+-     *
+-     * @param entities List<Parent> 实例对象列表
+-     * @return 影响行数
+-     * @throws org.springframework.jdbc.BadSqlGrammarException 入参是空List的时候会抛SQL语句错误的异常，请自行校验入参
+-     */
+-    int insertOrUpdateBatch(@Param("entities") List<Parent> entities);
+-
+-}
+-
+Index: homework-service/src/main/java/com/yuan/userservice/service/ParentService.java
+===================================================================
+diff --git a/homework-service/src/main/java/com/yuan/userservice/service/ParentService.java b/homework-service/src/main/java/com/yuan/userservice/service/ParentService.java
+deleted file mode 100644
+--- a/homework-service/src/main/java/com/yuan/userservice/service/ParentService.java	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
++++ /dev/null	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
+@@ -1,15 +0,0 @@
+-package com.yuan.userservice.service;
+-
+-import com.baomidou.mybatisplus.extension.service.IService;
+-import com.yuan.userservice.entity.Parent;
+-
+-/**
+- * (Parent)表服务接口
+- *
+- * @author makejava
+- * @since 2023-04-28 18:04:51
+- */
+-public interface ParentService extends IService<Parent> {
+-
+-}
+-
+Index: homework-service/src/main/java/com/yuan/userservice/entity/Teacher.java
+===================================================================
+diff --git a/homework-service/src/main/java/com/yuan/userservice/entity/Teacher.java b/homework-service/src/main/java/com/yuan/userservice/entity/Teacher.java
+deleted file mode 100644
+--- a/homework-service/src/main/java/com/yuan/userservice/entity/Teacher.java	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
++++ /dev/null	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
+@@ -1,108 +0,0 @@
+-package com.yuan.userservice.entity;
+-
+-
+-import com.baomidou.mybatisplus.extension.activerecord.Model;
+-
+-import java.io.Serializable;
+-
+-/**
+- * (Teacher)表实体类
+- *
+- * @author makejava
+- * @since 2023-04-28 18:02:35
+- */
+-@SuppressWarnings("serial")
+-public class Teacher extends Model<Teacher> {
+-
+-    private Integer teaId;
+-
+-    private String teaName;
+-
+-    private String teaSex;
+-
+-    private Integer teaAge;
+-
+-    private String teaEducation;
+-
+-    private String teaPhone;
+-
+-    private String teaToken;
+-
+-    private String teaAvatar;
+-
+-
+-    public Integer getTeaId() {
+-        return teaId;
+-    }
+-
+-    public void setTeaId(Integer teaId) {
+-        this.teaId = teaId;
+-    }
+-
+-    public String getTeaName() {
+-        return teaName;
+-    }
+-
+-    public void setTeaName(String teaName) {
+-        this.teaName = teaName;
+-    }
+-
+-    public String getTeaSex() {
+-        return teaSex;
+-    }
+-
+-    public void setTeaSex(String teaSex) {
+-        this.teaSex = teaSex;
+-    }
+-
+-    public Integer getTeaAge() {
+-        return teaAge;
+-    }
+-
+-    public void setTeaAge(Integer teaAge) {
+-        this.teaAge = teaAge;
+-    }
+-
+-    public String getTeaEducation() {
+-        return teaEducation;
+-    }
+-
+-    public void setTeaEducation(String teaEducation) {
+-        this.teaEducation = teaEducation;
+-    }
+-
+-    public String getTeaPhone() {
+-        return teaPhone;
+-    }
+-
+-    public void setTeaPhone(String teaPhone) {
+-        this.teaPhone = teaPhone;
+-    }
+-
+-    public String getTeaToken() {
+-        return teaToken;
+-    }
+-
+-    public void setTeaToken(String teaToken) {
+-        this.teaToken = teaToken;
+-    }
+-
+-    public String getTeaAvatar() {
+-        return teaAvatar;
+-    }
+-
+-    public void setTeaAvatar(String teaAvatar) {
+-        this.teaAvatar = teaAvatar;
+-    }
+-
+-    /**
+-     * 获取主键值
+-     *
+-     * @return 主键值
+-     */
+-    @Override
+-    protected Serializable pkVal() {
+-        return this.teaId;
+-    }
+-}
+-
+Index: homework-service/src/main/java/com/yuan/userservice/controller/ParentController.java
+===================================================================
+diff --git a/homework-service/src/main/java/com/yuan/userservice/controller/ParentController.java b/homework-service/src/main/java/com/yuan/userservice/controller/ParentController.java
+deleted file mode 100644
+--- a/homework-service/src/main/java/com/yuan/userservice/controller/ParentController.java	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
++++ /dev/null	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
+@@ -1,87 +0,0 @@
+-package com.yuan.userservice.controller;
+-
+-
+-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+-import com.baomidou.mybatisplus.extension.api.ApiController;
+-import com.baomidou.mybatisplus.extension.api.R;
+-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+-import com.yuan.userservice.entity.Parent;
+-import com.yuan.userservice.service.ParentService;
+-import org.springframework.web.bind.annotation.*;
+-
+-import javax.annotation.Resource;
+-import java.io.Serializable;
+-import java.util.List;
+-
+-/**
+- * (Parent)表控制层
+- *
+- * @author makejava
+- * @since 2023-04-28 18:04:41
+- */
+-@RestController
+-@RequestMapping("parent")
+-public class ParentController extends ApiController {
+-    /**
+-     * 服务对象
+-     */
+-    @Resource
+-    private ParentService parentService;
+-
+-    /**
+-     * 分页查询所有数据
+-     *
+-     * @param page   分页对象
+-     * @param parent 查询实体
+-     * @return 所有数据
+-     */
+-    @GetMapping
+-    public R selectAll(Page<Parent> page, Parent parent) {
+-        return success(this.parentService.page(page, new QueryWrapper<>(parent)));
+-    }
+-
+-    /**
+-     * 通过主键查询单条数据
+-     *
+-     * @param id 主键
+-     * @return 单条数据
+-     */
+-    @GetMapping("{id}")
+-    public R selectOne(@PathVariable Serializable id) {
+-        return success(this.parentService.getById(id));
+-    }
+-
+-    /**
+-     * 新增数据
+-     *
+-     * @param parent 实体对象
+-     * @return 新增结果
+-     */
+-    @PostMapping
+-    public R insert(@RequestBody Parent parent) {
+-        return success(this.parentService.save(parent));
+-    }
+-
+-    /**
+-     * 修改数据
+-     *
+-     * @param parent 实体对象
+-     * @return 修改结果
+-     */
+-    @PutMapping
+-    public R update(@RequestBody Parent parent) {
+-        return success(this.parentService.updateById(parent));
+-    }
+-
+-    /**
+-     * 删除数据
+-     *
+-     * @param idList 主键结合
+-     * @return 删除结果
+-     */
+-    @DeleteMapping
+-    public R delete(@RequestParam("idList") List<Long> idList) {
+-        return success(this.parentService.removeByIds(idList));
+-    }
+-}
+-
+Index: homework-service/src/main/java/com/yuan/userservice/entity/Parent.java
+===================================================================
+diff --git a/homework-service/src/main/java/com/yuan/userservice/entity/Parent.java b/homework-service/src/main/java/com/yuan/userservice/entity/Parent.java
+deleted file mode 100644
+--- a/homework-service/src/main/java/com/yuan/userservice/entity/Parent.java	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
++++ /dev/null	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
+@@ -1,98 +0,0 @@
+-package com.yuan.userservice.entity;
+-
+-
+-import com.baomidou.mybatisplus.extension.activerecord.Model;
+-
+-import java.io.Serializable;
+-
+-/**
+- * (Parent)表实体类
+- *
+- * @author makejava
+- * @since 2023-04-28 18:04:43
+- */
+-@SuppressWarnings("serial")
+-public class Parent extends Model<Parent> {
+-
+-    private Integer parId;
+-
+-    private String parName;
+-
+-    private String parSex;
+-
+-    private Integer parAge;
+-
+-    private String parPhone;
+-
+-    private String parToken;
+-
+-    private String parAvatar;
+-
+-
+-    public Integer getParId() {
+-        return parId;
+-    }
+-
+-    public void setParId(Integer parId) {
+-        this.parId = parId;
+-    }
+-
+-    public String getParName() {
+-        return parName;
+-    }
+-
+-    public void setParName(String parName) {
+-        this.parName = parName;
+-    }
+-
+-    public String getParSex() {
+-        return parSex;
+-    }
+-
+-    public void setParSex(String parSex) {
+-        this.parSex = parSex;
+-    }
+-
+-    public Integer getParAge() {
+-        return parAge;
+-    }
+-
+-    public void setParAge(Integer parAge) {
+-        this.parAge = parAge;
+-    }
+-
+-    public String getParPhone() {
+-        return parPhone;
+-    }
+-
+-    public void setParPhone(String parPhone) {
+-        this.parPhone = parPhone;
+-    }
+-
+-    public String getParToken() {
+-        return parToken;
+-    }
+-
+-    public void setParToken(String parToken) {
+-        this.parToken = parToken;
+-    }
+-
+-    public String getParAvatar() {
+-        return parAvatar;
+-    }
+-
+-    public void setParAvatar(String parAvatar) {
+-        this.parAvatar = parAvatar;
+-    }
+-
+-    /**
+-     * 获取主键值
+-     *
+-     * @return 主键值
+-     */
+-    @Override
+-    protected Serializable pkVal() {
+-        return this.parId;
+-    }
+-}
+-
+Index: homework-service/src/main/java/com/yuan/userservice/service/impl/TeacherServiceImpl.java
+===================================================================
+diff --git a/homework-service/src/main/java/com/yuan/userservice/service/impl/TeacherServiceImpl.java b/homework-service/src/main/java/com/yuan/userservice/service/impl/TeacherServiceImpl.java
+deleted file mode 100644
+--- a/homework-service/src/main/java/com/yuan/userservice/service/impl/TeacherServiceImpl.java	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
++++ /dev/null	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
+@@ -1,19 +0,0 @@
+-package com.yuan.userservice.service.impl;
+-
+-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+-import com.yuan.userservice.dao.TeacherDao;
+-import com.yuan.userservice.entity.Teacher;
+-import com.yuan.userservice.service.TeacherService;
+-import org.springframework.stereotype.Service;
+-
+-/**
+- * (Teacher)表服务实现类
+- *
+- * @author makejava
+- * @since 2023-04-28 18:04:31
+- */
+-@Service("teacherService")
+-public class TeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher> implements TeacherService {
+-
+-}
+-
+Index: homework-service/src/main/java/com/yuan/userservice/service/StudentService.java
+===================================================================
+diff --git a/homework-service/src/main/java/com/yuan/userservice/service/StudentService.java b/homework-service/src/main/java/com/yuan/userservice/service/StudentService.java
+deleted file mode 100644
+--- a/homework-service/src/main/java/com/yuan/userservice/service/StudentService.java	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
++++ /dev/null	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
+@@ -1,15 +0,0 @@
+-package com.yuan.userservice.service;
+-
+-import com.baomidou.mybatisplus.extension.service.IService;
+-import com.yuan.userservice.entity.Student;
+-
+-/**
+- * (Student)表服务接口
+- *
+- * @author makejava
+- * @since 2023-04-28 18:04:39
+- */
+-public interface StudentService extends IService<Student> {
+-
+-}
+-
+Index: homework-service/src/main/java/com/yuan/userservice/service/TeacherService.java
+===================================================================
+diff --git a/homework-service/src/main/java/com/yuan/userservice/service/TeacherService.java b/homework-service/src/main/java/com/yuan/userservice/service/TeacherService.java
+deleted file mode 100644
+--- a/homework-service/src/main/java/com/yuan/userservice/service/TeacherService.java	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
++++ /dev/null	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
+@@ -1,15 +0,0 @@
+-package com.yuan.userservice.service;
+-
+-import com.baomidou.mybatisplus.extension.service.IService;
+-import com.yuan.userservice.entity.Teacher;
+-
+-/**
+- * (Teacher)表服务接口
+- *
+- * @author makejava
+- * @since 2023-04-28 18:04:20
+- */
+-public interface TeacherService extends IService<Teacher> {
+-
+-}
+-
+Index: homework-service/src/main/java/com/yuan/userservice/entity/ParStu.java
+===================================================================
+diff --git a/homework-service/src/main/java/com/yuan/userservice/entity/ParStu.java b/homework-service/src/main/java/com/yuan/userservice/entity/ParStu.java
+deleted file mode 100644
+--- a/homework-service/src/main/java/com/yuan/userservice/entity/ParStu.java	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
++++ /dev/null	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
+@@ -1,68 +0,0 @@
+-package com.yuan.userservice.entity;
+-
+-
+-import com.baomidou.mybatisplus.extension.activerecord.Model;
+-
+-import java.io.Serializable;
+-
+-/**
+- * (ParStu)表实体类
+- *
+- * @author makejava
+- * @since 2023-04-28 18:05:43
+- */
+-@SuppressWarnings("serial")
+-public class ParStu extends Model<ParStu> {
+-
+-    private Integer parStuId;
+-
+-    private Integer stuId;
+-
+-    private Integer parId;
+-
+-    private String parStuName;
+-
+-
+-    public Integer getParStuId() {
+-        return parStuId;
+-    }
+-
+-    public void setParStuId(Integer parStuId) {
+-        this.parStuId = parStuId;
+-    }
+-
+-    public Integer getStuId() {
+-        return stuId;
+-    }
+-
+-    public void setStuId(Integer stuId) {
+-        this.stuId = stuId;
+-    }
+-
+-    public Integer getParId() {
+-        return parId;
+-    }
+-
+-    public void setParId(Integer parId) {
+-        this.parId = parId;
+-    }
+-
+-    public String getParStuName() {
+-        return parStuName;
+-    }
+-
+-    public void setParStuName(String parStuName) {
+-        this.parStuName = parStuName;
+-    }
+-
+-    /**
+-     * 获取主键值
+-     *
+-     * @return 主键值
+-     */
+-    @Override
+-    protected Serializable pkVal() {
+-        return this.parStuId;
+-    }
+-}
+-
+Index: homework-service/src/main/java/com/yuan/userservice/service/impl/ParentServiceImpl.java
+===================================================================
+diff --git a/homework-service/src/main/java/com/yuan/userservice/service/impl/ParentServiceImpl.java b/homework-service/src/main/java/com/yuan/userservice/service/impl/ParentServiceImpl.java
+deleted file mode 100644
+--- a/homework-service/src/main/java/com/yuan/userservice/service/impl/ParentServiceImpl.java	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
++++ /dev/null	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
+@@ -1,19 +0,0 @@
+-package com.yuan.userservice.service.impl;
+-
+-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+-import com.yuan.userservice.dao.ParentDao;
+-import com.yuan.userservice.entity.Parent;
+-import com.yuan.userservice.service.ParentService;
+-import org.springframework.stereotype.Service;
+-
+-/**
+- * (Parent)表服务实现类
+- *
+- * @author makejava
+- * @since 2023-04-28 18:05:30
+- */
+-@Service("parentService")
+-public class ParentServiceImpl extends ServiceImpl<ParentDao, Parent> implements ParentService {
+-
+-}
+-
+Index: review-service/pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n         xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd\">\r\n    <modelVersion>4.0.0</modelVersion>\r\n    <groupId>com.yuan</groupId>\r\n    <artifactId>review-service</artifactId>\r\n    <version>0.0.1-SNAPSHOT</version>\r\n    <name>review-service</name>\r\n    <description>review-service</description>\r\n    <properties>\r\n        <java.version>1.8</java.version>\r\n        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\r\n        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>\r\n        <spring-boot.version>2.6.13</spring-boot.version>\r\n    </properties>\r\n    <dependencies>\r\n        <dependency>\r\n            <groupId>org.springframework.boot</groupId>\r\n            <artifactId>spring-boot-starter</artifactId>\r\n        </dependency>\r\n\r\n        <dependency>\r\n            <groupId>org.springframework.boot</groupId>\r\n            <artifactId>spring-boot-starter-test</artifactId>\r\n            <scope>test</scope>\r\n        </dependency>\r\n    </dependencies>\r\n    <dependencyManagement>\r\n        <dependencies>\r\n            <dependency>\r\n                <groupId>org.springframework.boot</groupId>\r\n                <artifactId>spring-boot-dependencies</artifactId>\r\n                <version>${spring-boot.version}</version>\r\n                <type>pom</type>\r\n                <scope>import</scope>\r\n            </dependency>\r\n        </dependencies>\r\n    </dependencyManagement>\r\n\r\n    <build>\r\n        <plugins>\r\n            <plugin>\r\n                <groupId>org.apache.maven.plugins</groupId>\r\n                <artifactId>maven-compiler-plugin</artifactId>\r\n                <version>3.8.1</version>\r\n                <configuration>\r\n                    <source>1.8</source>\r\n                    <target>1.8</target>\r\n                    <encoding>UTF-8</encoding>\r\n                </configuration>\r\n            </plugin>\r\n            <plugin>\r\n                <groupId>org.springframework.boot</groupId>\r\n                <artifactId>spring-boot-maven-plugin</artifactId>\r\n                <version>${spring-boot.version}</version>\r\n                <configuration>\r\n                    <mainClass>com.yuan.reviewservice.ReviewServiceApplication</mainClass>\r\n                    <skip>true</skip>\r\n                </configuration>\r\n                <executions>\r\n                    <execution>\r\n                        <id>repackage</id>\r\n                        <goals>\r\n                            <goal>repackage</goal>\r\n                        </goals>\r\n                    </execution>\r\n                </executions>\r\n            </plugin>\r\n        </plugins>\r\n    </build>\r\n\r\n</project>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/review-service/pom.xml b/review-service/pom.xml
+--- a/review-service/pom.xml	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
++++ b/review-service/pom.xml	(date 1682678422754)
+@@ -7,35 +7,42 @@
+     <version>0.0.1-SNAPSHOT</version>
+     <name>review-service</name>
+     <description>review-service</description>
+-    <properties>
+-        <java.version>1.8</java.version>
+-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+-        <spring-boot.version>2.6.13</spring-boot.version>
+-    </properties>
++
++    <parent>
++        <groupId>org.yuan</groupId>
++        <artifactId>backStageManagement</artifactId>
++        <version>1.0-SNAPSHOT</version>
++    </parent>
++
+     <dependencies>
+         <dependency>
+             <groupId>org.springframework.boot</groupId>
+             <artifactId>spring-boot-starter</artifactId>
+         </dependency>
+-
++        <dependency>
++            <groupId>org.springframework.boot</groupId>
++            <artifactId>spring-boot-starter-web</artifactId>
++        </dependency>
+         <dependency>
+             <groupId>org.springframework.boot</groupId>
+             <artifactId>spring-boot-starter-test</artifactId>
+             <scope>test</scope>
+         </dependency>
+-    </dependencies>
+-    <dependencyManagement>
+-        <dependencies>
+-            <dependency>
+-                <groupId>org.springframework.boot</groupId>
+-                <artifactId>spring-boot-dependencies</artifactId>
+-                <version>${spring-boot.version}</version>
+-                <type>pom</type>
+-                <scope>import</scope>
+-            </dependency>
+-        </dependencies>
+-    </dependencyManagement>
++        <!-- nacos客户端依赖包 -->
++        <dependency>
++            <groupId>com.alibaba.cloud</groupId>
++            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
++        </dependency>
++        <!--nacos的配置管理依赖-->
++        <dependency>
++            <groupId>com.alibaba.cloud</groupId>
++            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
++        </dependency>
++        <dependency>
++            <groupId>mysql</groupId>
++            <artifactId>mysql-connector-java</artifactId>
++        </dependency>
++    </dependencies>
+ 
+     <build>
+         <plugins>
+Index: user-service/src/main/java/com/yuan/userservice/service/TeacherService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/user-service/src/main/java/com/yuan/userservice/service/TeacherService.java b/user-service/src/main/java/com/yuan/userservice/service/TeacherService.java
+new file mode 100644
+--- /dev/null	(date 1682682503572)
++++ b/user-service/src/main/java/com/yuan/userservice/service/TeacherService.java	(date 1682682503572)
+@@ -0,0 +1,15 @@
++package com.yuan.userservice.service;
++
++import com.baomidou.mybatisplus.extension.service.IService;
++import com.yuan.userservice.entity.Teacher;
++
++/**
++ * (Teacher)表服务接口
++ *
++ * @author makejava
++ * @since 2023-04-28 19:10:46
++ */
++public interface TeacherService extends IService<Teacher> {
++
++}
++
+Index: .idea/dataSources.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"DataSourceManagerImpl\" format=\"xml\" multifile-model=\"true\">\r\n    <data-source source=\"LOCAL\" name=\"bishe@139.9.117.98\" uuid=\"5471ca69-e1fa-4991-a830-bddf5dcbc463\">\r\n      <driver-ref>mysql.8</driver-ref>\r\n      <synchronize>true</synchronize>\r\n      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>\r\n      <jdbc-url>jdbc:mysql://139.9.117.98:3306/bishe</jdbc-url>\r\n      <working-dir>$ProjectFileDir$</working-dir>\r\n    </data-source>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/dataSources.xml b/.idea/dataSources.xml
+--- a/.idea/dataSources.xml	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
++++ b/.idea/dataSources.xml	(date 1682682504216)
+@@ -8,5 +8,12 @@
+       <jdbc-url>jdbc:mysql://139.9.117.98:3306/bishe</jdbc-url>
+       <working-dir>$ProjectFileDir$</working-dir>
+     </data-source>
++    <data-source source="LOCAL" name="bishe2@localhost" uuid="4cc3b96e-5c75-418c-a5fc-db73f81ebfbd">
++      <driver-ref>mysql.8</driver-ref>
++      <synchronize>true</synchronize>
++      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
++      <jdbc-url>jdbc:mysql://localhost:3306/bishe2</jdbc-url>
++      <working-dir>$ProjectFileDir$</working-dir>
++    </data-source>
+   </component>
+ </project>
+\ No newline at end of file
+Index: user-service/src/main/java/com/yuan/userservice/service/impl/TeacherServiceImpl.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/user-service/src/main/java/com/yuan/userservice/service/impl/TeacherServiceImpl.java b/user-service/src/main/java/com/yuan/userservice/service/impl/TeacherServiceImpl.java
+new file mode 100644
+--- /dev/null	(date 1682682503622)
++++ b/user-service/src/main/java/com/yuan/userservice/service/impl/TeacherServiceImpl.java	(date 1682682503622)
+@@ -0,0 +1,19 @@
++package com.yuan.userservice.service.impl;
++
++import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
++import com.yuan.userservice.dao.TeacherDao;
++import com.yuan.userservice.entity.Teacher;
++import com.yuan.userservice.service.TeacherService;
++import org.springframework.stereotype.Service;
++
++/**
++ * (Teacher)表服务实现类
++ *
++ * @author makejava
++ * @since 2023-04-28 19:45:55
++ */
++@Service("teacherService")
++public class TeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher> implements TeacherService {
++
++}
++
+Index: user-service/src/main/java/com/yuan/userservice/controller/TeacherController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/user-service/src/main/java/com/yuan/userservice/controller/TeacherController.java b/user-service/src/main/java/com/yuan/userservice/controller/TeacherController.java
+new file mode 100644
+--- /dev/null	(date 1682682503452)
++++ b/user-service/src/main/java/com/yuan/userservice/controller/TeacherController.java	(date 1682682503452)
+@@ -0,0 +1,87 @@
++package com.yuan.userservice.controller;
++
++
++import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
++import com.baomidou.mybatisplus.extension.api.ApiController;
++import com.baomidou.mybatisplus.extension.api.R;
++import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
++import com.yuan.userservice.entity.Teacher;
++import com.yuan.userservice.service.TeacherService;
++import org.springframework.web.bind.annotation.*;
++
++import javax.annotation.Resource;
++import java.io.Serializable;
++import java.util.List;
++
++/**
++ * (Teacher)表控制层
++ *
++ * @author makejava
++ * @since 2023-04-28 19:10:44
++ */
++@RestController
++@RequestMapping("teacher")
++public class TeacherController extends ApiController {
++    /**
++     * 服务对象
++     */
++    @Resource
++    private TeacherService teacherService;
++
++    /**
++     * 分页查询所有数据
++     *
++     * @param page    分页对象
++     * @param teacher 查询实体
++     * @return 所有数据
++     */
++    @GetMapping
++    public R selectAll(Page<Teacher> page, Teacher teacher) {
++        return success(this.teacherService.page(page, new QueryWrapper<>(teacher)));
++    }
++
++    /**
++     * 通过主键查询单条数据
++     *
++     * @param id 主键
++     * @return 单条数据
++     */
++    @GetMapping("{id}")
++    public R selectOne(@PathVariable Serializable id) {
++        return success(this.teacherService.getById(id));
++    }
++
++    /**
++     * 新增数据
++     *
++     * @param teacher 实体对象
++     * @return 新增结果
++     */
++    @PostMapping
++    public R insert(@RequestBody Teacher teacher) {
++        return success(this.teacherService.save(teacher));
++    }
++
++    /**
++     * 修改数据
++     *
++     * @param teacher 实体对象
++     * @return 修改结果
++     */
++    @PutMapping
++    public R update(@RequestBody Teacher teacher) {
++        return success(this.teacherService.updateById(teacher));
++    }
++
++    /**
++     * 删除数据
++     *
++     * @param idList 主键结合
++     * @return 删除结果
++     */
++    @DeleteMapping
++    public R delete(@RequestParam("idList") List<Long> idList) {
++        return success(this.teacherService.removeByIds(idList));
++    }
++}
++
+Index: user-service/src/main/java/com/yuan/userservice/dao/TeacherDao.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/user-service/src/main/java/com/yuan/userservice/dao/TeacherDao.java b/user-service/src/main/java/com/yuan/userservice/dao/TeacherDao.java
+new file mode 100644
+--- /dev/null	(date 1682682503637)
++++ b/user-service/src/main/java/com/yuan/userservice/dao/TeacherDao.java	(date 1682682503637)
+@@ -0,0 +1,35 @@
++package com.yuan.userservice.dao;
++
++import java.util.List;
++
++import com.baomidou.mybatisplus.core.mapper.BaseMapper;
++import org.apache.ibatis.annotations.Param;
++import com.yuan.userservice.entity.Teacher;
++
++/**
++ * (Teacher)表数据库访问层
++ *
++ * @author makejava
++ * @since 2023-04-28 19:10:45
++ */
++public interface TeacherDao extends BaseMapper<Teacher> {
++
++    /**
++     * 批量新增数据（MyBatis原生foreach方法）
++     *
++     * @param entities List<Teacher> 实例对象列表
++     * @return 影响行数
++     */
++    int insertBatch(@Param("entities") List<Teacher> entities);
++
++    /**
++     * 批量新增或按主键更新数据（MyBatis原生foreach方法）
++     *
++     * @param entities List<Teacher> 实例对象列表
++     * @return 影响行数
++     * @throws org.springframework.jdbc.BadSqlGrammarException 入参是空List的时候会抛SQL语句错误的异常，请自行校验入参
++     */
++    int insertOrUpdateBatch(@Param("entities") List<Teacher> entities);
++
++}
++
+Index: user-service/src/main/java/com/yuan/userservice/entity/Teacher.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/user-service/src/main/java/com/yuan/userservice/entity/Teacher.java b/user-service/src/main/java/com/yuan/userservice/entity/Teacher.java
+new file mode 100644
+--- /dev/null	(date 1682682503580)
++++ b/user-service/src/main/java/com/yuan/userservice/entity/Teacher.java	(date 1682682503580)
+@@ -0,0 +1,108 @@
++package com.yuan.userservice.entity;
++
++
++import com.baomidou.mybatisplus.extension.activerecord.Model;
++
++import java.io.Serializable;
++
++/**
++ * (Teacher)表实体类
++ *
++ * @author makejava
++ * @since 2023-04-28 19:10:45
++ */
++@SuppressWarnings("serial")
++public class Teacher extends Model<Teacher> {
++
++    private Integer teaId;
++
++    private String teaName;
++
++    private String teaSex;
++
++    private Integer teaAge;
++
++    private String teaEducation;
++
++    private String teaPhone;
++
++    private String teaToken;
++
++    private String teaAvatar;
++
++
++    public Integer getTeaId() {
++        return teaId;
++    }
++
++    public void setTeaId(Integer teaId) {
++        this.teaId = teaId;
++    }
++
++    public String getTeaName() {
++        return teaName;
++    }
++
++    public void setTeaName(String teaName) {
++        this.teaName = teaName;
++    }
++
++    public String getTeaSex() {
++        return teaSex;
++    }
++
++    public void setTeaSex(String teaSex) {
++        this.teaSex = teaSex;
++    }
++
++    public Integer getTeaAge() {
++        return teaAge;
++    }
++
++    public void setTeaAge(Integer teaAge) {
++        this.teaAge = teaAge;
++    }
++
++    public String getTeaEducation() {
++        return teaEducation;
++    }
++
++    public void setTeaEducation(String teaEducation) {
++        this.teaEducation = teaEducation;
++    }
++
++    public String getTeaPhone() {
++        return teaPhone;
++    }
++
++    public void setTeaPhone(String teaPhone) {
++        this.teaPhone = teaPhone;
++    }
++
++    public String getTeaToken() {
++        return teaToken;
++    }
++
++    public void setTeaToken(String teaToken) {
++        this.teaToken = teaToken;
++    }
++
++    public String getTeaAvatar() {
++        return teaAvatar;
++    }
++
++    public void setTeaAvatar(String teaAvatar) {
++        this.teaAvatar = teaAvatar;
++    }
++
++    /**
++     * 获取主键值
++     *
++     * @return 主键值
++     */
++    @Override
++    protected Serializable pkVal() {
++        return this.teaId;
++    }
++}
++
+Index: .idea/dataSources.local.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"dataSourceStorageLocal\" created-in=\"IU-223.8836.41\">\r\n    <data-source name=\"bishe@139.9.117.98\" uuid=\"5471ca69-e1fa-4991-a830-bddf5dcbc463\">\r\n      <database-info product=\"MySQL\" version=\"5.7.42\" jdbc-version=\"4.2\" driver-name=\"MySQL Connector/J\" driver-version=\"mysql-connector-java-8.0.25 (Revision: 08be9e9b4cba6aa115f9b27b215887af40b159e0)\" dbms=\"MYSQL\" exact-version=\"5.7.42\" exact-driver-version=\"8.0\">\r\n        <extra-name-characters>#@</extra-name-characters>\r\n        <identifier-quote-string>`</identifier-quote-string>\r\n      </database-info>\r\n      <case-sensitivity plain-identifiers=\"exact\" quoted-identifiers=\"exact\" />\r\n      <secret-storage>master_key</secret-storage>\r\n      <user-name>root</user-name>\r\n      <schema-mapping>\r\n        <introspection-scope>\r\n          <node kind=\"schema\" qname=\"@\" />\r\n        </introspection-scope>\r\n      </schema-mapping>\r\n    </data-source>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/dataSources.local.xml b/.idea/dataSources.local.xml
+--- a/.idea/dataSources.local.xml	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
++++ b/.idea/dataSources.local.xml	(date 1682682504230)
+@@ -15,5 +15,19 @@
+         </introspection-scope>
+       </schema-mapping>
+     </data-source>
++    <data-source name="bishe2@localhost" uuid="4cc3b96e-5c75-418c-a5fc-db73f81ebfbd">
++      <database-info product="MySQL" version="8.0.32" jdbc-version="4.2" driver-name="MySQL Connector/J" driver-version="mysql-connector-java-8.0.25 (Revision: 08be9e9b4cba6aa115f9b27b215887af40b159e0)" dbms="MYSQL" exact-version="8.0.32" exact-driver-version="8.0">
++        <extra-name-characters>#@</extra-name-characters>
++        <identifier-quote-string>`</identifier-quote-string>
++      </database-info>
++      <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower" />
++      <secret-storage>master_key</secret-storage>
++      <user-name>root</user-name>
++      <schema-mapping>
++        <introspection-scope>
++          <node kind="schema" qname="@" />
++        </introspection-scope>
++      </schema-mapping>
++    </data-source>
+   </component>
+ </project>
+\ No newline at end of file
+Index: course-service/pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n         xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd\">\r\n    <modelVersion>4.0.0</modelVersion>\r\n    <groupId>com.yuan</groupId>\r\n    <artifactId>course-service</artifactId>\r\n    <version>0.0.1-SNAPSHOT</version>\r\n    <name>course-service</name>\r\n    <description>course-service</description>\r\n    <properties>\r\n        <java.version>1.8</java.version>\r\n        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\r\n        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>\r\n        <spring-boot.version>2.6.13</spring-boot.version>\r\n    </properties>\r\n    <dependencies>\r\n        <dependency>\r\n            <groupId>org.springframework.boot</groupId>\r\n            <artifactId>spring-boot-starter</artifactId>\r\n        </dependency>\r\n\r\n        <dependency>\r\n            <groupId>org.springframework.boot</groupId>\r\n            <artifactId>spring-boot-starter-test</artifactId>\r\n            <scope>test</scope>\r\n        </dependency>\r\n    </dependencies>\r\n    <dependencyManagement>\r\n        <dependencies>\r\n            <dependency>\r\n                <groupId>org.springframework.boot</groupId>\r\n                <artifactId>spring-boot-dependencies</artifactId>\r\n                <version>${spring-boot.version}</version>\r\n                <type>pom</type>\r\n                <scope>import</scope>\r\n            </dependency>\r\n        </dependencies>\r\n    </dependencyManagement>\r\n\r\n    <build>\r\n        <plugins>\r\n            <plugin>\r\n                <groupId>org.apache.maven.plugins</groupId>\r\n                <artifactId>maven-compiler-plugin</artifactId>\r\n                <version>3.8.1</version>\r\n                <configuration>\r\n                    <source>1.8</source>\r\n                    <target>1.8</target>\r\n                    <encoding>UTF-8</encoding>\r\n                </configuration>\r\n            </plugin>\r\n            <plugin>\r\n                <groupId>org.springframework.boot</groupId>\r\n                <artifactId>spring-boot-maven-plugin</artifactId>\r\n                <version>${spring-boot.version}</version>\r\n                <configuration>\r\n                    <mainClass>com.yuan.courseservice.CourseServiceApplication</mainClass>\r\n                    <skip>true</skip>\r\n                </configuration>\r\n                <executions>\r\n                    <execution>\r\n                        <id>repackage</id>\r\n                        <goals>\r\n                            <goal>repackage</goal>\r\n                        </goals>\r\n                    </execution>\r\n                </executions>\r\n            </plugin>\r\n        </plugins>\r\n    </build>\r\n\r\n</project>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/course-service/pom.xml b/course-service/pom.xml
+--- a/course-service/pom.xml	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
++++ b/course-service/pom.xml	(date 1682678537669)
+@@ -7,35 +7,47 @@
+     <version>0.0.1-SNAPSHOT</version>
+     <name>course-service</name>
+     <description>course-service</description>
+-    <properties>
+-        <java.version>1.8</java.version>
+-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+-        <spring-boot.version>2.6.13</spring-boot.version>
+-    </properties>
++
++    <parent>
++        <groupId>org.yuan</groupId>
++        <artifactId>backStageManagement</artifactId>
++        <version>1.0-SNAPSHOT</version>
++    </parent>
++
+     <dependencies>
+         <dependency>
+             <groupId>org.springframework.boot</groupId>
+             <artifactId>spring-boot-starter</artifactId>
+         </dependency>
+-
++        <dependency>
++            <groupId>org.springframework.boot</groupId>
++            <artifactId>spring-boot-starter-web</artifactId>
++        </dependency>
+         <dependency>
+             <groupId>org.springframework.boot</groupId>
+             <artifactId>spring-boot-starter-test</artifactId>
+             <scope>test</scope>
+         </dependency>
+-    </dependencies>
+-    <dependencyManagement>
+-        <dependencies>
+-            <dependency>
+-                <groupId>org.springframework.boot</groupId>
+-                <artifactId>spring-boot-dependencies</artifactId>
+-                <version>${spring-boot.version}</version>
+-                <type>pom</type>
+-                <scope>import</scope>
+-            </dependency>
+-        </dependencies>
+-    </dependencyManagement>
++        <!-- nacos客户端依赖包 -->
++        <dependency>
++            <groupId>com.alibaba.cloud</groupId>
++            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
++        </dependency>
++        <!--nacos的配置管理依赖-->
++        <dependency>
++            <groupId>com.alibaba.cloud</groupId>
++            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
++        </dependency>
++        <dependency>
++            <groupId>mysql</groupId>
++            <artifactId>mysql-connector-java</artifactId>
++        </dependency>
++        <dependency>
++            <groupId>org.springframework</groupId>
++            <artifactId>spring-context</artifactId>
++            <version>5.3.23</version>
++        </dependency>
++    </dependencies>
+ 
+     <build>
+         <plugins>
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"1f3e7d5e-33cd-4436-bd07-87ad84a16360\" name=\"Changes\" comment=\"first\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/pom.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/pom.xml\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"MavenImportPreferences\">\r\n    <option name=\"importingSettings\">\r\n      <MavenImportingSettings>\r\n        <option name=\"workspaceImportEnabled\" value=\"true\" />\r\n      </MavenImportingSettings>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"2P387xBQ67EHaAhgCpH41tCVLes\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\">\r\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"ASKED_ADD_EXTERNAL_FILES\": \"true\",\r\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"SHARE_PROJECT_CONFIGURATION_FILES\": \"true\",\r\n    \"WebServerToolWindowFactoryState\": \"false\",\r\n    \"jdk.selected.JAVA_MODULE\": \"1.8\",\r\n    \"last_opened_file_path\": \"D:/code/javaProject/毕业设计/zidongpingyue/spring-cloud-bishe\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"settings.editor.selected.configurable\": \"project.propVCSSupport.DirectoryMappings\",\r\n    \"spring.configuration.checksum\": \"d709402f56bec3b7c4d4e9208fcf49cf\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  },\r\n  \"keyToStringList\": {\r\n    \"DatabaseDriversLRU\": [\r\n      \"mysql\"\r\n    ]\r\n  }\r\n}]]></component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"1f3e7d5e-33cd-4436-bd07-87ad84a16360\" name=\"Changes\" comment=\"\" />\r\n      <created>1682674242281</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1682674242281</updated>\r\n      <workItem from=\"1682674243470\" duration=\"1611000\" />\r\n      <workItem from=\"1682676399675\" duration=\"1154000\" />\r\n      <workItem from=\"1682677623110\" duration=\"13000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"first\">\r\n      <created>1682676810920</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1682676810920</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"2\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <option name=\"ADD_EXTERNAL_FILES_SILENTLY\" value=\"true\" />\r\n    <ignored-roots>\r\n      <path value=\"$PROJECT_DIR$/course-service\" />\r\n      <path value=\"$PROJECT_DIR$/homework-service\" />\r\n      <path value=\"$PROJECT_DIR$/review-service\" />\r\n      <path value=\"$PROJECT_DIR$/user-service\" />\r\n    </ignored-roots>\r\n    <MESSAGE value=\"first\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"first\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
++++ b/.idea/workspace.xml	(date 1682682504205)
+@@ -5,8 +5,37 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="1f3e7d5e-33cd-4436-bd07-87ad84a16360" name="Changes" comment="first">
++      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/yuan/userservice/controller/TeacherController.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/yuan/userservice/dao/TeacherDao.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/yuan/userservice/entity/Teacher.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/yuan/userservice/service/TeacherService.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/yuan/userservice/service/impl/TeacherServiceImpl.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/user-service/src/main/resources/mapper/TeacherDao.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/easyCodeTableSetting.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/easyCodeTableSetting.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/course-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/course-service/pom.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/homework-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/homework-service/pom.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/controller/ParStuController.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/controller/ParentController.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/controller/StudentController.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/controller/TeacherController.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/dao/ParStuDao.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/dao/ParentDao.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/dao/StudentDao.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/dao/TeacherDao.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/entity/ParStu.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/entity/Parent.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/entity/Student.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/entity/Teacher.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/service/ParStuService.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/service/ParentService.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/service/StudentService.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/service/TeacherService.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/service/impl/ParStuServiceImpl.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/service/impl/ParentServiceImpl.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/service/impl/StudentServiceImpl.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/homework-service/src/main/java/com/yuan/userservice/service/impl/TeacherServiceImpl.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/review-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/review-service/pom.xml" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -34,29 +63,49 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "ASKED_ADD_EXTERNAL_FILES": "true",
+-    "RunOnceActivity.OpenProjectViewOnStart": "true",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+-    "WebServerToolWindowFactoryState": "false",
+-    "jdk.selected.JAVA_MODULE": "1.8",
+-    "last_opened_file_path": "D:/code/javaProject/毕业设计/zidongpingyue/spring-cloud-bishe",
+-    "node.js.detected.package.eslint": "true",
+-    "node.js.detected.package.tslint": "true",
+-    "node.js.selected.package.eslint": "(autodetect)",
+-    "node.js.selected.package.tslint": "(autodetect)",
+-    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
+-    "spring.configuration.checksum": "d709402f56bec3b7c4d4e9208fcf49cf",
+-    "vue.rearranger.settings.migration": "true"
+-  },
+-  "keyToStringList": {
+-    "DatabaseDriversLRU": [
+-      "mysql"
+-    ]
+-  }
+-}]]></component>
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
++    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
++    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;1.8&quot;,
++    &quot;last_opened_file_path&quot;: &quot;D:/code/javaProject/毕业设计/zidongpingyue/spring-cloud-bishe&quot;,
++    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
++    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
++    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
++    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
++    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
++    &quot;spring.configuration.checksum&quot;: &quot;d709402f56bec3b7c4d4e9208fcf49cf&quot;,
++    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
++  },
++  &quot;keyToStringList&quot;: {
++    &quot;DatabaseDriversLRU&quot;: [
++      &quot;mysql&quot;
++    ]
++  }
++}</component>
++  <component name="RunManager">
++    <configuration name="CourseServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
++      <module name="course-service" />
++      <option name="SPRING_BOOT_MAIN_CLASS" value="com.yuan.courseservice.CourseServiceApplication" />
++      <extension name="coverage">
++        <pattern>
++          <option name="PATTERN" value="com.yuan.courseservice.*" />
++          <option name="ENABLED" value="true" />
++        </pattern>
++      </extension>
++      <method v="2">
++        <option name="Make" enabled="true" />
++      </method>
++    </configuration>
++    <recent_temporary>
++      <list>
++        <item itemvalue="Spring Boot.CourseServiceApplication" />
++      </list>
++    </recent_temporary>
++  </component>
+   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+   <component name="TaskManager">
+     <task active="true" id="Default" summary="Default task">
+@@ -67,7 +116,9 @@
+       <updated>1682674242281</updated>
+       <workItem from="1682674243470" duration="1611000" />
+       <workItem from="1682676399675" duration="1154000" />
+-      <workItem from="1682677623110" duration="13000" />
++      <workItem from="1682677623110" duration="847000" />
++      <workItem from="1682679318799" duration="94000" />
++      <workItem from="1682679946575" duration="1707000" />
+     </task>
+     <task id="LOCAL-00001" summary="first">
+       <created>1682676810920</created>
+@@ -76,11 +127,29 @@
+       <option name="project" value="LOCAL" />
+       <updated>1682676810920</updated>
+     </task>
+-    <option name="localTasksCounter" value="2" />
++    <task id="LOCAL-00002" summary="first">
++      <created>1682677696240</created>
++      <option name="number" value="00002" />
++      <option name="presentableId" value="LOCAL-00002" />
++      <option name="project" value="LOCAL" />
++      <updated>1682677696240</updated>
++    </task>
++    <option name="localTasksCounter" value="3" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+     <option name="version" value="3" />
++  </component>
++  <component name="Vcs.Log.Tabs.Properties">
++    <option name="TAB_STATES">
++      <map>
++        <entry key="MAIN">
++          <value>
++            <State />
++          </value>
++        </entry>
++      </map>
++    </option>
+   </component>
+   <component name="VcsManagerConfiguration">
+     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+Index: homework-service/pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n         xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd\">\r\n    <modelVersion>4.0.0</modelVersion>\r\n    <groupId>com.yuan</groupId>\r\n    <artifactId>homework-service</artifactId>\r\n    <version>0.0.1-SNAPSHOT</version>\r\n    <name>homework-service</name>\r\n    <description>homework-service</description>\r\n    <properties>\r\n        <java.version>1.8</java.version>\r\n        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\r\n        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>\r\n        <spring-boot.version>2.6.13</spring-boot.version>\r\n    </properties>\r\n    <dependencies>\r\n        <dependency>\r\n            <groupId>org.springframework.boot</groupId>\r\n            <artifactId>spring-boot-starter</artifactId>\r\n        </dependency>\r\n\r\n        <dependency>\r\n            <groupId>org.springframework.boot</groupId>\r\n            <artifactId>spring-boot-starter-test</artifactId>\r\n            <scope>test</scope>\r\n        </dependency>\r\n    </dependencies>\r\n    <dependencyManagement>\r\n        <dependencies>\r\n            <dependency>\r\n                <groupId>org.springframework.boot</groupId>\r\n                <artifactId>spring-boot-dependencies</artifactId>\r\n                <version>${spring-boot.version}</version>\r\n                <type>pom</type>\r\n                <scope>import</scope>\r\n            </dependency>\r\n        </dependencies>\r\n    </dependencyManagement>\r\n\r\n    <build>\r\n        <plugins>\r\n            <plugin>\r\n                <groupId>org.apache.maven.plugins</groupId>\r\n                <artifactId>maven-compiler-plugin</artifactId>\r\n                <version>3.8.1</version>\r\n                <configuration>\r\n                    <source>1.8</source>\r\n                    <target>1.8</target>\r\n                    <encoding>UTF-8</encoding>\r\n                </configuration>\r\n            </plugin>\r\n            <plugin>\r\n                <groupId>org.springframework.boot</groupId>\r\n                <artifactId>spring-boot-maven-plugin</artifactId>\r\n                <version>${spring-boot.version}</version>\r\n                <configuration>\r\n                    <mainClass>com.yuan.homeworkservice.HomeworkServiceApplication</mainClass>\r\n                    <skip>true</skip>\r\n                </configuration>\r\n                <executions>\r\n                    <execution>\r\n                        <id>repackage</id>\r\n                        <goals>\r\n                            <goal>repackage</goal>\r\n                        </goals>\r\n                    </execution>\r\n                </executions>\r\n            </plugin>\r\n        </plugins>\r\n    </build>\r\n\r\n</project>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/homework-service/pom.xml b/homework-service/pom.xml
+--- a/homework-service/pom.xml	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
++++ b/homework-service/pom.xml	(date 1682678470740)
+@@ -7,35 +7,42 @@
+     <version>0.0.1-SNAPSHOT</version>
+     <name>homework-service</name>
+     <description>homework-service</description>
+-    <properties>
+-        <java.version>1.8</java.version>
+-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+-        <spring-boot.version>2.6.13</spring-boot.version>
+-    </properties>
++
++    <parent>
++        <groupId>org.yuan</groupId>
++        <artifactId>backStageManagement</artifactId>
++        <version>1.0-SNAPSHOT</version>
++    </parent>
++
+     <dependencies>
+         <dependency>
+             <groupId>org.springframework.boot</groupId>
+             <artifactId>spring-boot-starter</artifactId>
+         </dependency>
+-
++        <dependency>
++            <groupId>org.springframework.boot</groupId>
++            <artifactId>spring-boot-starter-web</artifactId>
++        </dependency>
+         <dependency>
+             <groupId>org.springframework.boot</groupId>
+             <artifactId>spring-boot-starter-test</artifactId>
+             <scope>test</scope>
+         </dependency>
+-    </dependencies>
+-    <dependencyManagement>
+-        <dependencies>
+-            <dependency>
+-                <groupId>org.springframework.boot</groupId>
+-                <artifactId>spring-boot-dependencies</artifactId>
+-                <version>${spring-boot.version}</version>
+-                <type>pom</type>
+-                <scope>import</scope>
+-            </dependency>
+-        </dependencies>
+-    </dependencyManagement>
++        <!-- nacos客户端依赖包 -->
++        <dependency>
++            <groupId>com.alibaba.cloud</groupId>
++            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
++        </dependency>
++        <!--nacos的配置管理依赖-->
++        <dependency>
++            <groupId>com.alibaba.cloud</groupId>
++            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
++        </dependency>
++        <dependency>
++            <groupId>mysql</groupId>
++            <artifactId>mysql-connector-java</artifactId>
++        </dependency>
++    </dependencies>
+ 
+     <build>
+         <plugins>
+Index: .idea/easyCodeTableSetting.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"EasyCodeTableSetting\">\r\n    <option name=\"tableInfoMap\">\r\n      <map>\r\n        <entry key=\"bishe.par_stu\">\r\n          <value>\r\n            <TableInfoDTO>\r\n              <option name=\"fullColumn\">\r\n                <list>\r\n                  <ColumnInfoDTO>\r\n                    <option name=\"custom\" value=\"false\" />\r\n                    <option name=\"ext\" value=\"{}\" />\r\n                    <option name=\"name\" value=\"parStuId\" />\r\n                    <option name=\"type\" value=\"java.lang.Integer\" />\r\n                  </ColumnInfoDTO>\r\n                  <ColumnInfoDTO>\r\n                    <option name=\"custom\" value=\"false\" />\r\n                    <option name=\"ext\" value=\"{}\" />\r\n                    <option name=\"name\" value=\"stuId\" />\r\n                    <option name=\"type\" value=\"java.lang.Integer\" />\r\n                  </ColumnInfoDTO>\r\n                  <ColumnInfoDTO>\r\n                    <option name=\"custom\" value=\"false\" />\r\n                    <option name=\"ext\" value=\"{}\" />\r\n                    <option name=\"name\" value=\"parId\" />\r\n                    <option name=\"type\" value=\"java.lang.Integer\" />\r\n                  </ColumnInfoDTO>\r\n                  <ColumnInfoDTO>\r\n                    <option name=\"custom\" value=\"false\" />\r\n                    <option name=\"ext\" value=\"{}\" />\r\n                    <option name=\"name\" value=\"parStuName\" />\r\n                    <option name=\"type\" value=\"java.lang.String\" />\r\n                  </ColumnInfoDTO>\r\n                </list>\r\n              </option>\r\n              <option name=\"name\" value=\"ParStu\" />\r\n              <option name=\"preName\" value=\"\" />\r\n              <option name=\"saveModelName\" value=\"homework-service\" />\r\n              <option name=\"savePackageName\" value=\"com.yuan.userservice\" />\r\n              <option name=\"savePath\" value=\"./homework-service/src/main/java/com/yuan/userservice\" />\r\n              <option name=\"templateGroupName\" value=\"\" />\r\n            </TableInfoDTO>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"bishe.parent\">\r\n          <value>\r\n            <TableInfoDTO>\r\n              <option name=\"fullColumn\">\r\n                <list>\r\n                  <ColumnInfoDTO>\r\n                    <option name=\"custom\" value=\"false\" />\r\n                    <option name=\"ext\" value=\"{}\" />\r\n                    <option name=\"name\" value=\"parId\" />\r\n                    <option name=\"type\" value=\"java.lang.Integer\" />\r\n                  </ColumnInfoDTO>\r\n                  <ColumnInfoDTO>\r\n                    <option name=\"custom\" value=\"false\" />\r\n                    <option name=\"ext\" value=\"{}\" />\r\n                    <option name=\"name\" value=\"parName\" />\r\n                    <option name=\"type\" value=\"java.lang.String\" />\r\n                  </ColumnInfoDTO>\r\n                  <ColumnInfoDTO>\r\n                    <option name=\"custom\" value=\"false\" />\r\n                    <option name=\"ext\" value=\"{}\" />\r\n                    <option name=\"name\" value=\"parSex\" />\r\n                    <option name=\"type\" value=\"java.lang.String\" />\r\n                  </ColumnInfoDTO>\r\n                  <ColumnInfoDTO>\r\n                    <option name=\"custom\" value=\"false\" />\r\n                    <option name=\"ext\" value=\"{}\" />\r\n                    <option name=\"name\" value=\"parAge\" />\r\n                    <option name=\"type\" value=\"java.lang.Integer\" />\r\n                  </ColumnInfoDTO>\r\n                  <ColumnInfoDTO>\r\n                    <option name=\"custom\" value=\"false\" />\r\n                    <option name=\"ext\" value=\"{}\" />\r\n                    <option name=\"name\" value=\"parPhone\" />\r\n                    <option name=\"type\" value=\"java.lang.String\" />\r\n                  </ColumnInfoDTO>\r\n                  <ColumnInfoDTO>\r\n                    <option name=\"custom\" value=\"false\" />\r\n                    <option name=\"ext\" value=\"{}\" />\r\n                    <option name=\"name\" value=\"parToken\" />\r\n                    <option name=\"type\" value=\"java.lang.String\" />\r\n                  </ColumnInfoDTO>\r\n                  <ColumnInfoDTO>\r\n                    <option name=\"custom\" value=\"false\" />\r\n                    <option name=\"ext\" value=\"{}\" />\r\n                    <option name=\"name\" value=\"parAvatar\" />\r\n                    <option name=\"type\" value=\"java.lang.String\" />\r\n                  </ColumnInfoDTO>\r\n                </list>\r\n              </option>\r\n              <option name=\"name\" value=\"Parent\" />\r\n              <option name=\"preName\" value=\"\" />\r\n              <option name=\"saveModelName\" value=\"homework-service\" />\r\n              <option name=\"savePackageName\" value=\"com.yuan.userservice\" />\r\n              <option name=\"savePath\" value=\"./homework-service/src/main/java/com/yuan/userservice\" />\r\n              <option name=\"templateGroupName\" value=\"\" />\r\n            </TableInfoDTO>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"bishe.student\">\r\n          <value>\r\n            <TableInfoDTO>\r\n              <option name=\"fullColumn\">\r\n                <list>\r\n                  <ColumnInfoDTO>\r\n                    <option name=\"custom\" value=\"false\" />\r\n                    <option name=\"ext\" value=\"{}\" />\r\n                    <option name=\"name\" value=\"stuId\" />\r\n                    <option name=\"type\" value=\"java.lang.Integer\" />\r\n                  </ColumnInfoDTO>\r\n                  <ColumnInfoDTO>\r\n                    <option name=\"custom\" value=\"false\" />\r\n                    <option name=\"ext\" value=\"{}\" />\r\n                    <option name=\"name\" value=\"claId\" />\r\n                    <option name=\"type\" value=\"java.lang.Integer\" />\r\n                  </ColumnInfoDTO>\r\n                  <ColumnInfoDTO>\r\n                    <option name=\"custom\" value=\"false\" />\r\n                    <option name=\"ext\" value=\"{}\" />\r\n                    <option name=\"name\" value=\"stuName\" />\r\n                    <option name=\"type\" value=\"java.lang.String\" />\r\n                  </ColumnInfoDTO>\r\n                  <ColumnInfoDTO>\r\n                    <option name=\"custom\" value=\"false\" />\r\n                    <option name=\"ext\" value=\"{}\" />\r\n                    <option name=\"name\" value=\"stuSex\" />\r\n                    <option name=\"type\" value=\"java.lang.String\" />\r\n                  </ColumnInfoDTO>\r\n                  <ColumnInfoDTO>\r\n                    <option name=\"custom\" value=\"false\" />\r\n                    <option name=\"ext\" value=\"{}\" />\r\n                    <option name=\"name\" value=\"stuAge\" />\r\n                    <option name=\"type\" value=\"java.lang.Integer\" />\r\n                  </ColumnInfoDTO>\r\n                  <ColumnInfoDTO>\r\n                    <option name=\"custom\" value=\"false\" />\r\n                    <option name=\"ext\" value=\"{}\" />\r\n                    <option name=\"name\" value=\"stuPhone\" />\r\n                    <option name=\"type\" value=\"java.lang.String\" />\r\n                  </ColumnInfoDTO>\r\n                  <ColumnInfoDTO>\r\n                    <option name=\"custom\" value=\"false\" />\r\n                    <option name=\"ext\" value=\"{}\" />\r\n                    <option name=\"name\" value=\"stuToken\" />\r\n                    <option name=\"type\" value=\"java.lang.String\" />\r\n                  </ColumnInfoDTO>\r\n                  <ColumnInfoDTO>\r\n                    <option name=\"custom\" value=\"false\" />\r\n                    <option name=\"ext\" value=\"{}\" />\r\n                    <option name=\"name\" value=\"stuAvatar\" />\r\n                    <option name=\"type\" value=\"java.lang.String\" />\r\n                  </ColumnInfoDTO>\r\n                </list>\r\n              </option>\r\n              <option name=\"name\" value=\"Student\" />\r\n              <option name=\"preName\" value=\"\" />\r\n              <option name=\"saveModelName\" value=\"homework-service\" />\r\n              <option name=\"savePackageName\" value=\"com.yuan.userservice\" />\r\n              <option name=\"savePath\" value=\"./homework-service/src/main/java/com/yuan/userservice\" />\r\n              <option name=\"templateGroupName\" value=\"\" />\r\n            </TableInfoDTO>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"bishe.teacher\">\r\n          <value>\r\n            <TableInfoDTO>\r\n              <option name=\"fullColumn\">\r\n                <list>\r\n                  <ColumnInfoDTO>\r\n                    <option name=\"custom\" value=\"false\" />\r\n                    <option name=\"ext\" value=\"{}\" />\r\n                    <option name=\"name\" value=\"teaId\" />\r\n                    <option name=\"type\" value=\"java.lang.Integer\" />\r\n                  </ColumnInfoDTO>\r\n                  <ColumnInfoDTO>\r\n                    <option name=\"custom\" value=\"false\" />\r\n                    <option name=\"ext\" value=\"{}\" />\r\n                    <option name=\"name\" value=\"teaName\" />\r\n                    <option name=\"type\" value=\"java.lang.String\" />\r\n                  </ColumnInfoDTO>\r\n                  <ColumnInfoDTO>\r\n                    <option name=\"custom\" value=\"false\" />\r\n                    <option name=\"ext\" value=\"{}\" />\r\n                    <option name=\"name\" value=\"teaSex\" />\r\n                    <option name=\"type\" value=\"java.lang.String\" />\r\n                  </ColumnInfoDTO>\r\n                  <ColumnInfoDTO>\r\n                    <option name=\"custom\" value=\"false\" />\r\n                    <option name=\"ext\" value=\"{}\" />\r\n                    <option name=\"name\" value=\"teaAge\" />\r\n                    <option name=\"type\" value=\"java.lang.Integer\" />\r\n                  </ColumnInfoDTO>\r\n                  <ColumnInfoDTO>\r\n                    <option name=\"custom\" value=\"false\" />\r\n                    <option name=\"ext\" value=\"{}\" />\r\n                    <option name=\"name\" value=\"teaEducation\" />\r\n                    <option name=\"type\" value=\"java.lang.String\" />\r\n                  </ColumnInfoDTO>\r\n                  <ColumnInfoDTO>\r\n                    <option name=\"custom\" value=\"false\" />\r\n                    <option name=\"ext\" value=\"{}\" />\r\n                    <option name=\"name\" value=\"teaPhone\" />\r\n                    <option name=\"type\" value=\"java.lang.String\" />\r\n                  </ColumnInfoDTO>\r\n                  <ColumnInfoDTO>\r\n                    <option name=\"custom\" value=\"false\" />\r\n                    <option name=\"ext\" value=\"{}\" />\r\n                    <option name=\"name\" value=\"teaToken\" />\r\n                    <option name=\"type\" value=\"java.lang.String\" />\r\n                  </ColumnInfoDTO>\r\n                  <ColumnInfoDTO>\r\n                    <option name=\"custom\" value=\"false\" />\r\n                    <option name=\"ext\" value=\"{}\" />\r\n                    <option name=\"name\" value=\"teaAvatar\" />\r\n                    <option name=\"type\" value=\"java.lang.String\" />\r\n                  </ColumnInfoDTO>\r\n                </list>\r\n              </option>\r\n              <option name=\"name\" value=\"Teacher\" />\r\n              <option name=\"preName\" value=\"\" />\r\n              <option name=\"saveModelName\" value=\"homework-service\" />\r\n              <option name=\"savePackageName\" value=\"com.yuan.userservice\" />\r\n              <option name=\"savePath\" value=\"./homework-service/src/main/java/com/yuan/userservice\" />\r\n              <option name=\"templateGroupName\" value=\"MybatisPlus-Mixed\" />\r\n            </TableInfoDTO>\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/easyCodeTableSetting.xml b/.idea/easyCodeTableSetting.xml
+--- a/.idea/easyCodeTableSetting.xml	(revision 9744def9d24d0ac7deb8be29dd0afc95946da023)
++++ b/.idea/easyCodeTableSetting.xml	(date 1682682504224)
+@@ -3,6 +3,46 @@
+   <component name="EasyCodeTableSetting">
+     <option name="tableInfoMap">
+       <map>
++        <entry key="bishe.answer">
++          <value>
++            <TableInfoDTO>
++              <option name="fullColumn">
++                <list>
++                  <ColumnInfoDTO>
++                    <option name="custom" value="false" />
++                    <option name="ext" value="{}" />
++                    <option name="name" value="ansId" />
++                    <option name="type" value="java.lang.Integer" />
++                  </ColumnInfoDTO>
++                  <ColumnInfoDTO>
++                    <option name="custom" value="false" />
++                    <option name="ext" value="{}" />
++                    <option name="name" value="stuHomId" />
++                    <option name="type" value="java.lang.Integer" />
++                  </ColumnInfoDTO>
++                  <ColumnInfoDTO>
++                    <option name="custom" value="false" />
++                    <option name="ext" value="{}" />
++                    <option name="name" value="ansNum" />
++                    <option name="type" value="java.lang.Integer" />
++                  </ColumnInfoDTO>
++                  <ColumnInfoDTO>
++                    <option name="custom" value="false" />
++                    <option name="ext" value="{}" />
++                    <option name="name" value="ansTxt" />
++                    <option name="type" value="java.lang.String" />
++                  </ColumnInfoDTO>
++                </list>
++              </option>
++              <option name="name" value="Answer" />
++              <option name="preName" value="" />
++              <option name="saveModelName" value="" />
++              <option name="savePackageName" value="" />
++              <option name="savePath" value="" />
++              <option name="templateGroupName" value="" />
++            </TableInfoDTO>
++          </value>
++        </entry>
+         <entry key="bishe.par_stu">
+           <value>
+             <TableInfoDTO>
+@@ -225,6 +265,70 @@
+               <option name="saveModelName" value="homework-service" />
+               <option name="savePackageName" value="com.yuan.userservice" />
+               <option name="savePath" value="./homework-service/src/main/java/com/yuan/userservice" />
++              <option name="templateGroupName" value="MybatisPlus-Mixed" />
++            </TableInfoDTO>
++          </value>
++        </entry>
++        <entry key="bishe2.teacher">
++          <value>
++            <TableInfoDTO>
++              <option name="fullColumn">
++                <list>
++                  <ColumnInfoDTO>
++                    <option name="custom" value="false" />
++                    <option name="ext" value="{}" />
++                    <option name="name" value="teaId" />
++                    <option name="type" value="java.lang.Integer" />
++                  </ColumnInfoDTO>
++                  <ColumnInfoDTO>
++                    <option name="custom" value="false" />
++                    <option name="ext" value="{}" />
++                    <option name="name" value="teaName" />
++                    <option name="type" value="java.lang.String" />
++                  </ColumnInfoDTO>
++                  <ColumnInfoDTO>
++                    <option name="custom" value="false" />
++                    <option name="ext" value="{}" />
++                    <option name="name" value="teaSex" />
++                    <option name="type" value="java.lang.String" />
++                  </ColumnInfoDTO>
++                  <ColumnInfoDTO>
++                    <option name="custom" value="false" />
++                    <option name="ext" value="{}" />
++                    <option name="name" value="teaAge" />
++                    <option name="type" value="java.lang.Integer" />
++                  </ColumnInfoDTO>
++                  <ColumnInfoDTO>
++                    <option name="custom" value="false" />
++                    <option name="ext" value="{}" />
++                    <option name="name" value="teaEducation" />
++                    <option name="type" value="java.lang.String" />
++                  </ColumnInfoDTO>
++                  <ColumnInfoDTO>
++                    <option name="custom" value="false" />
++                    <option name="ext" value="{}" />
++                    <option name="name" value="teaPhone" />
++                    <option name="type" value="java.lang.String" />
++                  </ColumnInfoDTO>
++                  <ColumnInfoDTO>
++                    <option name="custom" value="false" />
++                    <option name="ext" value="{}" />
++                    <option name="name" value="teaToken" />
++                    <option name="type" value="java.lang.String" />
++                  </ColumnInfoDTO>
++                  <ColumnInfoDTO>
++                    <option name="custom" value="false" />
++                    <option name="ext" value="{}" />
++                    <option name="name" value="teaAvatar" />
++                    <option name="type" value="java.lang.String" />
++                  </ColumnInfoDTO>
++                </list>
++              </option>
++              <option name="name" value="Teacher" />
++              <option name="preName" value="" />
++              <option name="saveModelName" value="user-service" />
++              <option name="savePackageName" value="com.yuan.userservice" />
++              <option name="savePath" value="./user-service/src/main/java/com/yuan/userservice" />
+               <option name="templateGroupName" value="MybatisPlus-Mixed" />
+             </TableInfoDTO>
+           </value>
+Index: user-service/src/main/resources/mapper/TeacherDao.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/user-service/src/main/resources/mapper/TeacherDao.xml b/user-service/src/main/resources/mapper/TeacherDao.xml
+new file mode 100644
+--- /dev/null	(date 1682682503630)
++++ b/user-service/src/main/resources/mapper/TeacherDao.xml	(date 1682682503630)
+@@ -0,0 +1,40 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
++<mapper namespace="com.yuan.userservice.dao.TeacherDao">
++
++    <resultMap type="com.yuan.userservice.entity.Teacher" id="TeacherMap">
++        <result property="teaId" column="tea_id" jdbcType="INTEGER"/>
++        <result property="teaName" column="tea_name" jdbcType="VARCHAR"/>
++        <result property="teaSex" column="tea_sex" jdbcType="VARCHAR"/>
++        <result property="teaAge" column="tea_age" jdbcType="INTEGER"/>
++        <result property="teaEducation" column="tea_education" jdbcType="VARCHAR"/>
++        <result property="teaPhone" column="tea_phone" jdbcType="VARCHAR"/>
++        <result property="teaToken" column="tea_token" jdbcType="VARCHAR"/>
++        <result property="teaAvatar" column="tea_avatar" jdbcType="VARCHAR"/>
++    </resultMap>
++
++    <!-- 批量插入 -->
++    <insert id="insertBatch" keyProperty="teaId" useGeneratedKeys="true">
++        insert into bishe2.teacher(tea_name, tea_sex, tea_age, tea_education, tea_phone, tea_token, tea_avatar)
++        values
++        <foreach collection="entities" item="entity" separator=",">
++            (#{entity.teaName}, #{entity.teaSex}, #{entity.teaAge}, #{entity.teaEducation}, #{entity.teaPhone},
++            #{entity.teaToken}, #{entity.teaAvatar})
++        </foreach>
++    </insert>
++    <!-- 批量插入或按主键更新 -->
++    <insert id="insertOrUpdateBatch" keyProperty="teaId" useGeneratedKeys="true">
++        insert into bishe2.teacher(tea_name, tea_sex, tea_age, tea_education, tea_phone, tea_token, tea_avatar)
++        values
++        <foreach collection="entities" item="entity" separator=",">
++            (#{entity.teaName}, #{entity.teaSex}, #{entity.teaAge}, #{entity.teaEducation}, #{entity.teaPhone},
++            #{entity.teaToken}, #{entity.teaAvatar})
++        </foreach>
++        on duplicate key update
++        tea_name = values(tea_name) , tea_sex = values(tea_sex) , tea_age = values(tea_age) , tea_education =
++        values(tea_education) , tea_phone = values(tea_phone) , tea_token = values(tea_token) , tea_avatar =
++        values(tea_avatar)
++    </insert>
++
++</mapper>
++
