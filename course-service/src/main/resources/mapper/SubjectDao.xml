@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuan.courseservice.dao.SubjectDao">
+
+    <resultMap type="com.yuan.courseservice.entity.Subject" id="SubjectMap">
+        <result property="subId" column="sub_id" jdbcType="INTEGER"/>
+        <result property="subName" column="sub_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="subId" useGeneratedKeys="true">
+        insert into bishe.subject(sub_name)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.subName})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="subId" useGeneratedKeys="true">
+        insert into bishe.subject(sub_name)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.subName})
+        </foreach>
+        on duplicate key update
+        sub_name = values(sub_name)
+    </insert>
+
+</mapper>
+

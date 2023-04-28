@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuan.courseservice.dao.CourseDao">
+
+    <resultMap type="com.yuan.courseservice.entity.Course" id="CourseMap">
+        <result property="couId" column="cou_id" jdbcType="INTEGER"/>
+        <result property="subId" column="sub_id" jdbcType="INTEGER"/>
+        <result property="claId" column="cla_id" jdbcType="INTEGER"/>
+        <result property="teaId" column="tea_id" jdbcType="INTEGER"/>
+        <result property="couName" column="cou_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="couId" useGeneratedKeys="true">
+        insert into bishe.course(sub_id, cla_id, tea_id, cou_name)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.subId}, #{entity.claId}, #{entity.teaId}, #{entity.couName})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="couId" useGeneratedKeys="true">
+        insert into bishe.course(sub_id, cla_id, tea_id, cou_name)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.subId}, #{entity.claId}, #{entity.teaId}, #{entity.couName})
+        </foreach>
+        on duplicate key update
+        sub_id = values(sub_id) , cla_id = values(cla_id) , tea_id = values(tea_id) , cou_name = values(cou_name)
+    </insert>
+
+</mapper>
+

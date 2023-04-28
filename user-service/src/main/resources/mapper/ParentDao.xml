@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuan.userservice.dao.ParentDao">
+
+    <resultMap type="com.yuan.userservice.entity.Parent" id="ParentMap">
+        <result property="parId" column="par_id" jdbcType="INTEGER"/>
+        <result property="parName" column="par_name" jdbcType="VARCHAR"/>
+        <result property="parSex" column="par_sex" jdbcType="VARCHAR"/>
+        <result property="parAge" column="par_age" jdbcType="INTEGER"/>
+        <result property="parPhone" column="par_phone" jdbcType="VARCHAR"/>
+        <result property="parToken" column="par_token" jdbcType="VARCHAR"/>
+        <result property="parAvatar" column="par_avatar" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="parId" useGeneratedKeys="true">
+        insert into bishe.parent(par_name, par_sex, par_age, par_phone, par_token, par_avatar)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.parName}, #{entity.parSex}, #{entity.parAge}, #{entity.parPhone}, #{entity.parToken},
+            #{entity.parAvatar})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="parId" useGeneratedKeys="true">
+        insert into bishe.parent(par_name, par_sex, par_age, par_phone, par_token, par_avatar)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.parName}, #{entity.parSex}, #{entity.parAge}, #{entity.parPhone}, #{entity.parToken},
+            #{entity.parAvatar})
+        </foreach>
+        on duplicate key update
+        par_name = values(par_name) , par_sex = values(par_sex) , par_age = values(par_age) , par_phone =
+        values(par_phone) , par_token = values(par_token) , par_avatar = values(par_avatar)
+    </insert>
+
+</mapper>
+

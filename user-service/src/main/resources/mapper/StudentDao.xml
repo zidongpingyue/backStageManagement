@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuan.userservice.dao.StudentDao">
+
+    <resultMap type="com.yuan.userservice.entity.Student" id="StudentMap">
+        <result property="stuId" column="stu_id" jdbcType="INTEGER"/>
+        <result property="claId" column="cla_id" jdbcType="INTEGER"/>
+        <result property="stuName" column="stu_name" jdbcType="VARCHAR"/>
+        <result property="stuSex" column="stu_sex" jdbcType="VARCHAR"/>
+        <result property="stuAge" column="stu_age" jdbcType="INTEGER"/>
+        <result property="stuPhone" column="stu_phone" jdbcType="VARCHAR"/>
+        <result property="stuToken" column="stu_token" jdbcType="VARCHAR"/>
+        <result property="stuAvatar" column="stu_avatar" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="stuId" useGeneratedKeys="true">
+        insert into bishe.student(cla_id, stu_name, stu_sex, stu_age, stu_phone, stu_token, stu_avatar)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.claId}, #{entity.stuName}, #{entity.stuSex}, #{entity.stuAge}, #{entity.stuPhone},
+            #{entity.stuToken}, #{entity.stuAvatar})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="stuId" useGeneratedKeys="true">
+        insert into bishe.student(cla_id, stu_name, stu_sex, stu_age, stu_phone, stu_token, stu_avatar)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.claId}, #{entity.stuName}, #{entity.stuSex}, #{entity.stuAge}, #{entity.stuPhone},
+            #{entity.stuToken}, #{entity.stuAvatar})
+        </foreach>
+        on duplicate key update
+        cla_id = values(cla_id) , stu_name = values(stu_name) , stu_sex = values(stu_sex) , stu_age = values(stu_age) ,
+        stu_phone = values(stu_phone) , stu_token = values(stu_token) , stu_avatar = values(stu_avatar)
+    </insert>
+
+</mapper>
+
